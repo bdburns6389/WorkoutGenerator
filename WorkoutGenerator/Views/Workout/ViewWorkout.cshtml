@@ -9,7 +9,7 @@
 <ul>
     @foreach (var exerciseWorkout in Model.Exercises)
     {
-        <li>@exerciseWorkout.Exercise</li>
+        <li>@exerciseWorkout.Exercise.Name</li>
     }
 </ul>
 
@@ -18,4 +18,4 @@
     <p><i>No Workout Exercises</i></p>
 }
 
-<p><a asp-controller="Workout" asp-action="AddItem" asp-route-id="@Model.Workout.ID">Add Exercise</a></p>
+<p><a asp-controller="Workout" asp-action="AddExercise" asp-route-id="@Model.Workout.ID">Add Exercise</a></p>
