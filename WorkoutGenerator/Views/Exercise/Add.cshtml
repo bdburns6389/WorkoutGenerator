@@ -1,0 +1,25 @@
+﻿@model RandomWorkout.ViewModels.AddExerciseViewModel
+
+<h1>Add Cheese</h1>
+
+<form asp-controller="Exercise" asp-action="Add" method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input class="form-control" asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <input class="form-control" asp-for="Description" />
+        <span asp-validation-for="Description"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MuscleGroupID"></label>
+        <select asp-for="MuscleGroupID" asp-items="Model.MuscleGroups"></select>
+        <!-- //Needs to refer to CategoryID, not Categories, or will not be a drop down, just a list that doesnt link to anything -->
+    </div>
+
+    <input type="submit" value="Add Exercise" />
+
+</form>

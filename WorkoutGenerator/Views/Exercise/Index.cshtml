@@ -1,0 +1,29 @@
+﻿@model List<RandomWorkout.Models.Exercise>
+
+<h1>@ViewBag.Title</h1>
+
+<table class="table">
+
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <td>Muscle Group</td>
+    </tr>
+
+    @foreach (var exercise in Model)
+    {
+        <tr>
+            <td>@exercise.Name</td>
+            <td>@exercise.Description</td>
+            <td>@exercise.MuscleGroup.Name</td>
+        </tr>
+    }
+</table>
+
+@if (Model.Count == 0)
+{
+    <p>No exercises yet!</p>
+}
+
+<span><a asp-controller="Exercise" asp-action="Add">Add</a></span><span> |</span>
+<span><a asp-controller="Exercise" asp-action="Remove">Remove</a></span>

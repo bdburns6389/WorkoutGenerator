@@ -1,0 +1,21 @@
+﻿@model RandomWorkout.ViewModels.ViewWorkoutViewModel
+
+@{ ViewBag.Title = Model.Workout.Name;
+
+}
+
+
+
+<ul>
+    @foreach (var exerciseWorkout in Model.Exercises)
+    {
+        <li>@exerciseWorkout.Exercise</li>
+    }
+</ul>
+
+@if (Model.Exercises.Count == 0)
+{
+    <p><i>No Workout Exercises</i></p>
+}
+
+<p><a asp-controller="Workout" asp-action="AddItem" asp-route-id="@Model.Workout.ID">Add Exercise</a></p>

@@ -1,0 +1,20 @@
+﻿@model RandomWorkout.ViewModels.AddWorkoutExerciseViewModel
+
+@{
+    ViewBag.Title = "Add Item to Workout: " + Model.Workout.Name;
+}
+
+
+
+<form asp-controller="Workout" asp-action="AddItem" method="post">
+
+    <div class="form-group">
+        <label asp-for="ExerciseID"></label>
+        <select asp-for="ExerciseID" asp-items="Model.Exercises"></select>
+        <span asp-validation-for="ExerciseID"></span>
+    </div>
+
+    <input type="hidden" name="WorkoutID" value="@Model.Workout.ID" />
+    <input type="submit" value="Add Item" />
+
+</form>

@@ -1,0 +1,15 @@
+﻿@model List<RandomWorkout.Models.MuscleGroup>
+
+<ul>
+    @foreach (var muscleGroup in Model)
+    {
+        <li>@muscleGroup.Name</li>
+    }
+</ul>
+
+
+@if (Model.Count == 0)
+{
+    <p>No Muscle Groups yet!</p>
+}
+<p><a asp-controller="MuscleGroup" asp-action="Add">Add Muscle Group</a></p>

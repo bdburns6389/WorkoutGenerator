@@ -1,0 +1,12 @@
+﻿@model RandomWorkout.ViewModels.AddMuscleGroupViewModel
+
+<h1>Add Muscle Group</h1>
+<form asp-controller="MuscleGroup" asp-action="Add" method="post">
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+
+    <input type="submit" value="Add Muscle Group" />
+</form>
