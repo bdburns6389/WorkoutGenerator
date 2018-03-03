@@ -2,17 +2,17 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RandomWorkout.Data;
 using RandomWorkout.Models;
 using RandomWorkout.ViewModels;
+using WorkoutGenerator.Data;
 
 namespace RandomWorkout.Controllers
 {
     public class WorkoutController : Controller
     {
-        private readonly ExerciseDbContext context;
+        private readonly ApplicationDbContext context;
 
-        public WorkoutController(ExerciseDbContext dbContext)
+        public WorkoutController(ApplicationDbContext dbContext)
         {
             context = dbContext;
         }
@@ -69,7 +69,7 @@ namespace RandomWorkout.Controllers
             return View(viewModel);
         }
 
-        public IActionResult AddItem(int id)
+        public IActionResult AddExercise(int id)
         {
             Workout workout = context.Workouts.Single(m => m.ID == id);
             List<Exercise> exercises = context.Exercises.ToList();
@@ -77,8 +77,8 @@ namespace RandomWorkout.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddItem(AddWorkoutExerciseViewModel addWorkoutExerciseViewModel)
-        {
+        public IActionResult AddExercise(AddWorkoutExerciseViewModel addWorkoutExerciseViewModel)
+        {//Changed from AddItem to work for Exercise program
 
             if (ModelState.IsValid)
             {

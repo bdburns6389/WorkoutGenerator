@@ -4,12 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using RandomWorkout.Models;
 using WorkoutGenerator.Models;
 
 namespace WorkoutGenerator.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Exercise> Exercises { get; set; }
+        public DbSet<MuscleGroup> MuscleGroups { get; set; }
+
+        public DbSet<Workout> Workouts { get; set; }
+        public DbSet<ExerciseWorkout> ExerciseWorkouts { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -21,6 +27,8 @@ namespace WorkoutGenerator.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+            builder.Entity<ExerciseWorkout>()
+                .HasKey(c => new { c.ExerciseID, c.WorkoutID });
         }
     }
 }

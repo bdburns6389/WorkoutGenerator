@@ -2,18 +2,18 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RandomWorkout.Data;
 using RandomWorkout.Models;
 using RandomWorkout.ViewModels;
+using WorkoutGenerator.Data;
 
 namespace RandomWorkout.Controllers
 {
 
     public class ExerciseController : Controller
     {
-        private ExerciseDbContext context;
+        private ApplicationDbContext context;
 
-        public ExerciseController(ExerciseDbContext dbContext)
+        public ExerciseController(ApplicationDbContext dbContext)
         {
             context = dbContext;
         }

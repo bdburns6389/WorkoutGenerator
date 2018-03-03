@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using RandomWorkout.Data;
 using RandomWorkout.Models;
 using RandomWorkout.ViewModels;
+using WorkoutGenerator.Data;
 
 namespace RandomWorkout.Controllers
 {
     public class MuscleGroupController : Controller
     {
-        private readonly ExerciseDbContext context;
+        private readonly ApplicationDbContext context;
 
-        public MuscleGroupController(ExerciseDbContext dbContext)
+        public MuscleGroupController(ApplicationDbContext dbContext)
         {
             context = dbContext;
         }
