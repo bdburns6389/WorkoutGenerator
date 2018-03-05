@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RandomWorkout.Models;
@@ -19,6 +20,7 @@ namespace RandomWorkout.Controllers
         }
 
         // GET: /<controller>/
+        //[Authorize] This attribute will require login before allowing access.  Will be redirected after success.
         public IActionResult Index()
         {
             //List<Cheese> cheeses = context.Cheeses.ToList();

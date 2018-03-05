@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RandomWorkout.Models;
@@ -23,7 +24,7 @@ namespace RandomWorkout.Controllers
             List<Workout> workouts = context.Workouts.ToList();
             return View(workouts);
         }
-
+        //[Authorize]  This attribute will redirect to login page to allow access.
         public IActionResult Add()
         {//Won't work yet due to no menuviewmodel.
             AddWorkoutViewModel addMenuViewModel = new AddWorkoutViewModel();
