@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using RandomWorkout.Models;
 using WorkoutGenerator.Models;
 
@@ -29,6 +30,7 @@ namespace WorkoutGenerator.Data
             // Add your customizations after calling base.OnModelCreating(builder);
             builder.Entity<ExerciseWorkout>()
                 .HasKey(c => new { c.ExerciseID, c.WorkoutID });
+      
         }
     }
 }
