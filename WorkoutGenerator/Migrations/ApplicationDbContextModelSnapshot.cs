@@ -8,13 +8,12 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using WorkoutGenerator.Data;
 
-namespace WorkoutGenerator.Data.Migrations
+namespace WorkoutGenerator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180303164709_InitialCreate")]
-    partial class InitialCreate
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,9 +139,15 @@ namespace WorkoutGenerator.Data.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("UserId1");
+
                     b.HasKey("ID");
 
                     b.HasIndex("MuscleGroupID");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Exercises");
                 });
@@ -286,6 +291,10 @@ namespace WorkoutGenerator.Data.Migrations
                         .WithMany("Exercises")
                         .HasForeignKey("MuscleGroupID")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WorkoutGenerator.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("RandomWorkout.Models.ExerciseWorkout", b =>

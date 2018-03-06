@@ -14,8 +14,10 @@ namespace RandomWorkout.Models
         [Key]
         public int ID { get; set; }
 
-        public string UserId { get; set; }
+        //UserId and ApplicationUser User is used to make a OneToMany Relationship 
         [ForeignKey("ID")]
+        public int UserId { get; set; }
+        
         public virtual ApplicationUser User { get; set; }
 
         public IList<ExerciseWorkout> ExerciseWorkouts { get; set; } = new List<ExerciseWorkout>();
