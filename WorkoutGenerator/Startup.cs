@@ -35,6 +35,9 @@ namespace WorkoutGenerator
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+
+
+
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             //This will allow global authorization throughout web app.
