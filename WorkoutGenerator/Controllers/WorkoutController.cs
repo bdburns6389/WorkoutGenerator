@@ -18,7 +18,8 @@ namespace RandomWorkout.Controllers
             context = dbContext;
         }
 
-
+        //[AllowAnonymous]  THis will allow access without logging in while Global authorization is enabled
+        //                  in Startup.cs .MVC()
         public IActionResult Index()
         {//Might be wrong context.  Might need to be context.Menus.
             List<Workout> workouts = context.Workouts.ToList();

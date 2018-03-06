@@ -21,6 +21,7 @@ namespace RandomWorkout.Controllers
 
         // GET: /<controller>/
         //[Authorize] This attribute will require login before allowing access.  Will be redirected after success.
+        //[AllowAnonymous]  This attribute will allow access if global authorization is enabled.
         public IActionResult Index()
         {
             //List<Cheese> cheeses = context.Cheeses.ToList();

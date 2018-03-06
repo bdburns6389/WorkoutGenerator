@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using WorkoutGenerator.Data;
 using WorkoutGenerator.Models;
 using WorkoutGenerator.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace WorkoutGenerator
 {
@@ -35,8 +37,14 @@ namespace WorkoutGenerator
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
-
-            services.AddMvc();
+            //This will allow global authorization throughout web app.
+            services.AddMvc(o =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                o.Filters.Add(new AuthorizeFilter(policy));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
