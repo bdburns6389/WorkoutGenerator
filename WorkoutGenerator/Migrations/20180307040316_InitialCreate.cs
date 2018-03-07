@@ -189,8 +189,8 @@ namespace WorkoutGenerator.Migrations
                     Description = table.Column<string>(nullable: true),
                     MuscleGroupID = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: false),
-                    UserId1 = table.Column<string>(nullable: true)
+                    OwnerId = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -202,8 +202,8 @@ namespace WorkoutGenerator.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Exercises_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Exercises_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -278,9 +278,9 @@ namespace WorkoutGenerator.Migrations
                 column: "MuscleGroupID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Exercises_UserId1",
+                name: "IX_Exercises_UserId",
                 table: "Exercises",
-                column: "UserId1");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ExerciseWorkouts_WorkoutID",

@@ -11,8 +11,8 @@ using WorkoutGenerator.Data;
 namespace WorkoutGenerator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180306221337_AddApplicationUserWorkout")]
-    partial class AddApplicationUserWorkout
+    [Migration("20180307040316_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -140,15 +140,15 @@ namespace WorkoutGenerator.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("UserId");
+                    b.Property<string>("OwnerId");
 
-                    b.Property<string>("UserId1");
+                    b.Property<string>("UserId");
 
                     b.HasKey("ID");
 
                     b.HasIndex("MuscleGroupID");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Exercises");
                 });
@@ -294,8 +294,8 @@ namespace WorkoutGenerator.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WorkoutGenerator.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
+                        .WithMany("Exercises")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("RandomWorkout.Models.ExerciseWorkout", b =>
