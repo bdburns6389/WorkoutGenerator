@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using RandomWorkout.Models;
 using RandomWorkout.ViewModels;
 using WorkoutGenerator.Data;
+using WorkoutGenerator.Models;
 
 namespace RandomWorkout.Controllers
 {
@@ -38,10 +39,17 @@ namespace RandomWorkout.Controllers
 
         [HttpPost]
         public IActionResult Add(AddExerciseViewModel addExerciseViewModel)
-        {
+        {/*string user = User.Identity.Name;
+ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+// then when you're creating your new exercise you can include: 
+UserID = userLoggedIn.Id
+            */
 
             if (ModelState.IsValid)
             {
+                //Create user id connection to put into new exercise, linking ApplciationUser and Exercise
+                string user = User.Identity.Name;
+                ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
                 // Add the new Exercise to my existing exercises
                 MuscleGroup newMuscleGroup =
                     context.MuscleGroups.Single(c => c.ID == addExerciseViewModel.MuscleGroupID);
@@ -51,7 +59,7 @@ namespace RandomWorkout.Controllers
                     Name = addExerciseViewModel.Name,
                     Description = addExerciseViewModel.Description,
                     MuscleGroup = newMuscleGroup,
-                    OwnerId = addExerciseViewModel.OwnerId
+                    OwnerId = userLoggedIn.Id
                 };
 
                 context.Exercises.Add(newExercise);
