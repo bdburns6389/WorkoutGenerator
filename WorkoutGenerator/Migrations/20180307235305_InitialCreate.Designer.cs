@@ -11,7 +11,7 @@ using WorkoutGenerator.Data;
 namespace WorkoutGenerator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180307040316_InitialCreate")]
+    [Migration("20180307235305_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

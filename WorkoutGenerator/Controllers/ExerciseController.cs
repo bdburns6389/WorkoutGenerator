@@ -37,19 +37,19 @@ namespace RandomWorkout.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(AddExerciseViewModel addCheeseViewModel)
+        public IActionResult Add(AddExerciseViewModel addExerciseViewModel)
         {
 
             if (ModelState.IsValid)
             {
                 // Add the new cheese to my existing cheeses
                 MuscleGroup newMuscleGroup =
-                    context.MuscleGroups.Single(c => c.ID == addCheeseViewModel.MuscleGroupID);
+                    context.MuscleGroups.Single(c => c.ID == addExerciseViewModel.MuscleGroupID);
                 Exercise newExercise = new Exercise
 
                 {
-                    Name = addCheeseViewModel.Name,
-                    Description = addCheeseViewModel.Description,
+                    Name = addExerciseViewModel.Name,
+                    Description = addExerciseViewModel.Description,
                     MuscleGroup = newMuscleGroup
                 };
 

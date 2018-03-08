@@ -40,7 +40,7 @@ namespace WorkoutGenerator
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
-            //This will allow global authorization throughout web app.
+            //Enforce global authorization throughout web app.
             services.AddMvc(o =>
             {
                 var policy = new AuthorizationPolicyBuilder()
