@@ -32,9 +32,14 @@ namespace RandomWorkout.Controllers
             ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
 
 
-            IList<Exercise> exercises = context.Exercises.Include(c => c.MuscleGroup).ToList();
-            
-            return View(exercises);
+
+            List<Exercise> exercises = context.Exercises.Include(c => c.MuscleGroup).ToList();
+
+            var views = context.Exercises
+                .Where(c => c.OwnerId == c.User.Id).ToList();//doesnt work, but I think it is on the right track.  Look at exercises and ID
+           
+           return View(views);
+           //return View(exercises);
         }
 
         public IActionResult Add()
