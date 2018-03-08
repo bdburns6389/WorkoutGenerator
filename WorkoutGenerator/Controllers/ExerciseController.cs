@@ -26,8 +26,14 @@ namespace RandomWorkout.Controllers
         public IActionResult Index()
         {
             //List<Cheese> cheeses = context.Cheeses.ToList();
-            IList<Exercise> exercises = context.Exercises.Include(c => c.MuscleGroup).ToList();
 
+            //TODO #1 Try to filter exercises in View() to only show exercises by user.
+            string user = User.Identity.Name;
+            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+
+
+            IList<Exercise> exercises = context.Exercises.Include(c => c.MuscleGroup).ToList();
+            
             return View(exercises);
         }
 
@@ -39,11 +45,7 @@ namespace RandomWorkout.Controllers
 
         [HttpPost]
         public IActionResult Add(AddExerciseViewModel addExerciseViewModel)
-        {/*string user = User.Identity.Name;
-ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
-// then when you're creating your new exercise you can include: 
-UserID = userLoggedIn.Id
-            */
+        {
 
             if (ModelState.IsValid)
             {
