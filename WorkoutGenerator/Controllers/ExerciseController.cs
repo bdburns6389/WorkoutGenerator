@@ -42,7 +42,7 @@ namespace RandomWorkout.Controllers
 
             if (ModelState.IsValid)
             {
-                // Add the new cheese to my existing cheeses
+                // Add the new Exercise to my existing exercises
                 MuscleGroup newMuscleGroup =
                     context.MuscleGroups.Single(c => c.ID == addExerciseViewModel.MuscleGroupID);
                 Exercise newExercise = new Exercise
@@ -50,7 +50,8 @@ namespace RandomWorkout.Controllers
                 {
                     Name = addExerciseViewModel.Name,
                     Description = addExerciseViewModel.Description,
-                    MuscleGroup = newMuscleGroup
+                    MuscleGroup = newMuscleGroup,
+                    OwnerId = addExerciseViewModel.OwnerId
                 };
 
                 context.Exercises.Add(newExercise);

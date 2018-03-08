@@ -19,7 +19,7 @@
         <select asp-for="MuscleGroupID" asp-items="Model.MuscleGroups"></select>
         <!-- //Needs to refer to CategoryID, not Categories, or will not be a drop down, just a list that doesnt link to anything -->
     </div>
-    <input type="hidden" name="UserID" value="@Model." />
+    <input type="hidden" name="OwnerId" value="@Model.OwnerId" />
     <input type="submit" value="Add Exercise" />
 
 </form>

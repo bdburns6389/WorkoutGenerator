@@ -18,6 +18,8 @@ namespace RandomWorkout.ViewModels
         [Display(Name = "Muscle Group")]
         public int MuscleGroupID { get; set; }
         public List<SelectListItem> MuscleGroups { get; set; }
+        //should refer to key for linking to Application user.
+        public string OwnerId { get; set; }
 
         public AddExerciseViewModel() { }
 
