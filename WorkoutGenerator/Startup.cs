@@ -42,7 +42,7 @@ namespace WorkoutGenerator
             services.AddTransient<IEmailSender, EmailSender>();
             //Enforce global authorization throughout web app.
             services.AddMvc(o =>
-            {
+            {//Require Authorization site wide.  
                 var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .Build();

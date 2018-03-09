@@ -23,10 +23,12 @@ namespace RandomWorkout.Controllers
         //[AllowAnonymous]  THis will allow access without logging in while Global authorization is enabled
         //                  in Startup.cs .MVC()
         public IActionResult Index()
-        {//Might be wrong context.  Might need to be context.Menus.
-
+        {
+            string user = User.Identity.Name;
+            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            var filteredWorkouts = context.Workouts.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
             List<Workout> workouts = context.Workouts.ToList();
-            return View(workouts);
+            return View(filteredWorkouts);
         }
         //[Authorize]  This attribute will redirect to login page to allow access.
         public IActionResult Add()
@@ -40,10 +42,10 @@ namespace RandomWorkout.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Create user id connection to put into new exercise, linking ApplciationUser and Exercise
+                //Create user id connection to put into new exercise, linking ApplciationUser and Workout
                 string user = User.Identity.Name;
                 ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
-                // Add the new cheese to my existing cheeses
+
                 Workout newWorkout = new Workout
                 {
                     Name = addWorkoutViewModel.Name,
@@ -88,13 +90,13 @@ namespace RandomWorkout.Controllers
 
         [HttpPost]
         public IActionResult AddExercise(AddWorkoutExerciseViewModel addWorkoutExerciseViewModel)
-        {//Changed from AddItem to work for Exercise program
+        {
 
             if (ModelState.IsValid)
             {
                 var exerciseID = addWorkoutExerciseViewModel.ExerciseID;
                 var workoutID = addWorkoutExerciseViewModel.WorkoutID;
-                //WORK HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
                 IList<ExerciseWorkout> existingItems = context.ExerciseWorkouts
                     .Where(cm => cm.ExerciseID == exerciseID)
                     .Where(cm => cm.WorkoutID == workoutID).ToList();
@@ -111,7 +113,7 @@ namespace RandomWorkout.Controllers
                     context.SaveChanges();
                 }
                 return Redirect(string.Format("/Workout/ViewWorkout/{0}", addWorkoutExerciseViewModel.WorkoutID));
-            }  //Should this Be .MenuID?  Or something else?
+            } 
             return View(addWorkoutExerciseViewModel);
         }
     }
