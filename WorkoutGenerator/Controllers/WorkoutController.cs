@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using RandomWorkout.Models;
 using RandomWorkout.ViewModels;
 using WorkoutGenerator.Data;
+using WorkoutGenerator.Models;
 
 namespace RandomWorkout.Controllers
 {
@@ -22,6 +24,7 @@ namespace RandomWorkout.Controllers
         //                  in Startup.cs .MVC()
         public IActionResult Index()
         {//Might be wrong context.  Might need to be context.Menus.
+
             List<Workout> workouts = context.Workouts.ToList();
             return View(workouts);
         }
@@ -37,10 +40,15 @@ namespace RandomWorkout.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Create user id connection to put into new exercise, linking ApplciationUser and Exercise
+                string user = User.Identity.Name;
+                ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
                 // Add the new cheese to my existing cheeses
                 Workout newWorkout = new Workout
                 {
                     Name = addWorkoutViewModel.Name,
+                    DateCreated = DateTime.Now,
+                    OwnerId = userLoggedIn.Id
                 };
 
                 context.Workouts.Add(newWorkout);
