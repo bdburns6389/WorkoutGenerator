@@ -12,5 +12,7 @@ namespace WorkoutGenerator.Models
     {
         //Should link to Exercise model to create One to Many relationship
         public IList<Exercise> Exercises { get; set; }
+
+        public IList<Workout> Workouts { get; set; }
     }
 }
