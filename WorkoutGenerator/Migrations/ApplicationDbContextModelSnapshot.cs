@@ -133,6 +133,8 @@ namespace WorkoutGenerator.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("DateCreated");
+
                     b.Property<string>("Description");
 
                     b.Property<int>("MuscleGroupID");

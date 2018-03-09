@@ -7,8 +7,10 @@
     <tr>
         <th>Name</th>
         <th>Description</th>
-        <td>Muscle Group</td>
-        <td>OwnerId</td>
+        <th>Muscle Group</th>
+        <th>OwnerId</th>
+        <th>Date Created</th>
+
     </tr>
 
     @foreach (var exercise in Model)
@@ -18,6 +20,8 @@
             <td>@exercise.Description</td>
             <td>@exercise.MuscleGroup.Name</td>
             <td>@exercise.OwnerId</td>
+            <td>@exercise.DateCreated</td>
+
         </tr>
     }
 </table>
