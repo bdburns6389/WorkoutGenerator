@@ -5,7 +5,7 @@ namespace RandomWorkout.ViewModels
     public class AddWorkoutViewModel
     {
         [Required]
-        [Display(Name = "Menu Name")]
+        [Display(Name = "Workout Name")]
         public string Name { get; set; }
     }
 }
