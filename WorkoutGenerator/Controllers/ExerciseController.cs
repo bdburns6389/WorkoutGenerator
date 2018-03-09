@@ -35,9 +35,8 @@ namespace RandomWorkout.Controllers
 
             List<Exercise> exercises = context.Exercises.Include(c => c.MuscleGroup).ToList();
 
-            var views = context.Exercises
-                .Where(c => c.OwnerId == c.User.Id).ToList();//doesnt work, but I think it is on the right track.  Look at exercises and ID
-           
+            var views = context.Exercises.Where(c => c.OwnerId == userLoggedIn.Id).ToList();//doesnt work, but I think it is on the right track.  Look at exercises and ID
+           //userLoggedIn.Id allows comparing of Id in exercise to that of the User.
            return View(views);
            //return View(exercises);
         }
