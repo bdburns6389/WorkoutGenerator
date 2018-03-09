@@ -1,0 +1,1 @@
+﻿Exercises are now filtered by user, next step is to make workouts specific to user.

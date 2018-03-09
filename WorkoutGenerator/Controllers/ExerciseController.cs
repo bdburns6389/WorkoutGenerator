@@ -25,19 +25,15 @@ namespace RandomWorkout.Controllers
         //[AllowAnonymous]  This attribute will allow access if global authorization is enabled.
         public IActionResult Index()
         {
-            //List<Cheese> cheeses = context.Cheeses.ToList();
+            //Filter exercises in View() to only show exercises by user.
+           string user = User.Identity.Name;
+           ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
 
-            //TODO #1 Try to filter exercises in View() to only show exercises by user.
-            string user = User.Identity.Name;
-            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+           List<Exercise> exercises = context.Exercises.Include(c => c.MuscleGroup).ToList();
 
-
-
-            List<Exercise> exercises = context.Exercises.Include(c => c.MuscleGroup).ToList();
-
-            var views = context.Exercises.Where(c => c.OwnerId == userLoggedIn.Id).ToList();//doesnt work, but I think it is on the right track.  Look at exercises and ID
+           var filteredExercises = context.Exercises.Where(c => c.OwnerId == userLoggedIn.Id).ToList();//doesnt work, but I think it is on the right track.  Look at exercises and ID
            //userLoggedIn.Id allows comparing of Id in exercise to that of the User.
-           return View(views);
+           return View(filteredExercises);
            //return View(exercises);
         }
 

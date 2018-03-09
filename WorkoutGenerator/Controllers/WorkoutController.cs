@@ -27,7 +27,7 @@ namespace RandomWorkout.Controllers
         }
         //[Authorize]  This attribute will redirect to login page to allow access.
         public IActionResult Add()
-        {//Won't work yet due to no menuviewmodel.
+        {
             AddWorkoutViewModel addMenuViewModel = new AddWorkoutViewModel();
             return View(addMenuViewModel);
         }
@@ -60,7 +60,7 @@ namespace RandomWorkout.Controllers
                 .Where(cm => cm.WorkoutID == id)
                 .ToList();
 
-            Workout workout = context.Workouts.Single(m => m.ID == id); //TODO receiving contains no elements error.
+            Workout workout = context.Workouts.Single(m => m.ID == id); 
 
             ViewWorkoutViewModel viewModel = new ViewWorkoutViewModel
             {
@@ -101,8 +101,6 @@ namespace RandomWorkout.Controllers
 
                     context.ExerciseWorkouts.Add(workoutItem);
                     context.SaveChanges();
-                    //TODO  Adding cheese to both menus for some reason.
-                    //TODO not sure where to redirect.
                 }
                 return Redirect(string.Format("/Workout/ViewWorkout/{0}", addWorkoutExerciseViewModel.WorkoutID));
             }  //Should this Be .MenuID?  Or something else?
