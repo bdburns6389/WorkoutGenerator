@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,8 +32,9 @@ namespace RandomWorkout.Controllers
 
            List<Exercise> exercises = context.Exercises.Include(c => c.MuscleGroup).ToList();
 
-           var filteredExercises = context.Exercises.Where(c => c.OwnerId == userLoggedIn.Id).ToList();//doesnt work, but I think it is on the right track.  Look at exercises and ID
-           //userLoggedIn.Id allows comparing of Id in exercise to that of the User.
+           var filteredExercises = context.Exercises.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
+           //var filteredExercises = context.Exercises.Where(c => c.OwnerId == userLoggedIn.Id).OrderBy(c => c.Name).ToList();//This will order results by name of exercise.
+            //userLoggedIn.Id allows comparing of Id in exercise to that of the User.
            return View(filteredExercises);
            //return View(exercises);
         }
@@ -61,7 +63,8 @@ namespace RandomWorkout.Controllers
                     Name = addExerciseViewModel.Name,
                     Description = addExerciseViewModel.Description,
                     MuscleGroup = newMuscleGroup,
-                    OwnerId = userLoggedIn.Id
+                    OwnerId = userLoggedIn.Id,
+                    DateCreated = DateTime.Now//Pay attention to this, creates time stamp for creation of entry
                 };
 
                 context.Exercises.Add(newExercise);

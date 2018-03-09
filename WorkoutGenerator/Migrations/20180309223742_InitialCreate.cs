@@ -186,6 +186,7 @@ namespace WorkoutGenerator.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     MuscleGroupID = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),

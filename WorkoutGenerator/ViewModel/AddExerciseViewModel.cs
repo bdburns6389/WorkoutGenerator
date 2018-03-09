@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using RandomWorkout.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -20,7 +21,7 @@ namespace RandomWorkout.ViewModels
         public List<SelectListItem> MuscleGroups { get; set; }
         //should refer to key for linking to Application user.
         public string OwnerId { get; set; }
-
+        public DateTime DateCreated { get; set; }
         public AddExerciseViewModel() { }
 
         public AddExerciseViewModel(IEnumerable<MuscleGroup> muscleGroups)
