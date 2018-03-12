@@ -7,6 +7,7 @@ namespace RandomWorkout.ViewModels
         [Required]
         [Display(Name = "Muscle Group Name")]
         public string Name { get; set; }
+        public string OwnerId { get; set; }
 
     }
 }

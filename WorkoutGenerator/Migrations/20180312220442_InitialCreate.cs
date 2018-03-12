@@ -49,19 +49,6 @@ namespace WorkoutGenerator.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MuscleGroups",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MuscleGroups", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -165,6 +152,27 @@ namespace WorkoutGenerator.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MuscleGroups",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    OwnerId = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MuscleGroups", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_MuscleGroups_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -296,6 +304,11 @@ namespace WorkoutGenerator.Migrations
                 name: "IX_ExerciseWorkouts_WorkoutID",
                 table: "ExerciseWorkouts",
                 column: "WorkoutID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MuscleGroups_UserId",
+                table: "MuscleGroups",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Workouts_UserId",

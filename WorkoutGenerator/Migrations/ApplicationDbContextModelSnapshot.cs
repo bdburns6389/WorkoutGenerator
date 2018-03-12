@@ -174,7 +174,13 @@ namespace WorkoutGenerator.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("OwnerId");
+
+                    b.Property<string>("UserId");
+
                     b.HasKey("ID");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("MuscleGroups");
                 });
@@ -318,6 +324,13 @@ namespace WorkoutGenerator.Migrations
                         .WithMany("ExerciseWorkouts")
                         .HasForeignKey("WorkoutID")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("RandomWorkout.Models.MuscleGroup", b =>
+                {
+                    b.HasOne("WorkoutGenerator.Models.ApplicationUser", "User")
+                        .WithMany("MuscleGroups")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("RandomWorkout.Models.Workout", b =>

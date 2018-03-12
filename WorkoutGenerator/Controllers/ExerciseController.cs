@@ -41,7 +41,9 @@ namespace RandomWorkout.Controllers
 
         public IActionResult Add()
         {
-            AddExerciseViewModel addExerciseViewModel = new AddExerciseViewModel(context.MuscleGroups.ToList());//TODO use a .Where() to pull only musclegroups by user.  First connect user to musclegroups.
+            string user = User.Identity.Name;
+            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            AddExerciseViewModel addExerciseViewModel = new AddExerciseViewModel(context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList());//TODO use a .Where() to pull only musclegroups by user.  First connect user to musclegroups.
             return View(addExerciseViewModel);
         }
 

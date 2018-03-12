@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RandomWorkout.Models;
 using RandomWorkout.ViewModels;
 using WorkoutGenerator.Data;
+using WorkoutGenerator.Models;
 
 namespace RandomWorkout.Controllers
 {
@@ -18,7 +19,9 @@ namespace RandomWorkout.Controllers
 
         public IActionResult Index()
         {
-            List<MuscleGroup> musclegroups = context.MuscleGroups.ToList();
+            string user = User.Identity.Name;
+            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            List<MuscleGroup> musclegroups = context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
             return View(musclegroups);
         }
 
@@ -33,10 +36,13 @@ namespace RandomWorkout.Controllers
         {
             if (ModelState.IsValid)
             {
+                string user = User.Identity.Name;
+                ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
                 // Add the new cheese to my existing cheeses
                 MuscleGroup newMuscleGroup = new MuscleGroup
                 {
                     Name = addMuscleGroupViewModel.Name,
+                    OwnerId = userLoggedIn.Id
                 };
 
                 context.MuscleGroups.Add(newMuscleGroup);
