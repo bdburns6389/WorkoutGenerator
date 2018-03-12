@@ -64,10 +64,12 @@ namespace RandomWorkout.Controllers
 
         public IActionResult ViewWorkout(int id)
         {
+            string user = User.Identity.Name;
+            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
             List<ExerciseWorkout> exercises = context
                 .ExerciseWorkouts
                 .Include(item => item.Exercise)
-                .Where(cm => cm.WorkoutID == id)
+                .Where(cm => cm.WorkoutID == id && cm.Workout.OwnerId == userLoggedIn.Id)//cm.Workout.OwnerId == userLoggedIn.Id returns list of owner specific workouts
                 .ToList();
 
             Workout workout = context.Workouts.Single(m => m.ID == id); 
@@ -83,8 +85,11 @@ namespace RandomWorkout.Controllers
 
         public IActionResult AddExercise(int id)
         {
+            string user = User.Identity.Name;
+            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            
             Workout workout = context.Workouts.Single(m => m.ID == id);
-            List<Exercise> exercises = context.Exercises.ToList();
+            List<Exercise> exercises = context.Exercises.Where(c => c.OwnerId == userLoggedIn.Id).ToList();//OwnerId specifies user for exercise list.
             return View(new AddWorkoutExerciseViewModel(workout, exercises));
         }
 
