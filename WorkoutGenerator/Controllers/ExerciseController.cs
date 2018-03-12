@@ -41,7 +41,7 @@ namespace RandomWorkout.Controllers
 
         public IActionResult Add()
         {
-            AddExerciseViewModel addExerciseViewModel = new AddExerciseViewModel(context.MuscleGroups.ToList());
+            AddExerciseViewModel addExerciseViewModel = new AddExerciseViewModel(context.MuscleGroups.ToList());//TODO use a .Where() to pull only musclegroups by user.  First connect user to musclegroups.
             return View(addExerciseViewModel);
         }
 
@@ -82,8 +82,10 @@ namespace RandomWorkout.Controllers
 
         public IActionResult Remove()
         {
+            string user = User.Identity.Name;
+            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
             ViewBag.title = "Remove Exercises";
-            ViewBag.exercises = context.Exercises.ToList();
+            ViewBag.exercises = context.Exercises.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
             return View();
         }
 
