@@ -16,5 +16,7 @@ namespace WorkoutGenerator.Models
         public IList<Workout> Workouts { get; set; }
 
         public IList<MuscleGroup> MuscleGroups { get; set; }
+
+        public IList<ExerciseRecord> ExerciseRecords { get; set; }
     }
 }

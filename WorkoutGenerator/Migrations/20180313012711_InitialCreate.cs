@@ -228,6 +228,44 @@ namespace WorkoutGenerator.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ExerciseRecords",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    ExerciseID = table.Column<int>(nullable: false),
+                    OwnerId = table.Column<string>(nullable: true),
+                    Reps = table.Column<string>(nullable: true),
+                    Sets = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
+                    Weight = table.Column<string>(nullable: true),
+                    WorkoutID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExerciseRecords", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_ExerciseRecords_Exercises_ExerciseID",
+                        column: x => x.ExerciseID,
+                        principalTable: "Exercises",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExerciseRecords_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ExerciseRecords_Workouts_WorkoutID",
+                        column: x => x.WorkoutID,
+                        principalTable: "Workouts",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ExerciseWorkouts",
                 columns: table => new
                 {
@@ -291,6 +329,21 @@ namespace WorkoutGenerator.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ExerciseRecords_ExerciseID",
+                table: "ExerciseRecords",
+                column: "ExerciseID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExerciseRecords_UserId",
+                table: "ExerciseRecords",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExerciseRecords_WorkoutID",
+                table: "ExerciseRecords",
+                column: "WorkoutID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Exercises_MuscleGroupID",
                 table: "Exercises",
                 column: "MuscleGroupID");
@@ -332,6 +385,9 @@ namespace WorkoutGenerator.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "ExerciseRecords");
 
             migrationBuilder.DropTable(
                 name: "ExerciseWorkouts");

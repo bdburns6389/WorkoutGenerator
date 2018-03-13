@@ -50,12 +50,12 @@ namespace RandomWorkout.Controllers
         [HttpPost]
         public IActionResult Add(AddExerciseViewModel addExerciseViewModel)
         {
-
+            string user = User.Identity.Name;
+            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
             if (ModelState.IsValid)
             {
                 //Create user id connection to put into new exercise, linking ApplciationUser and Exercise
-                string user = User.Identity.Name;
-                ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+                
                 // Add the new Exercise to my existing exercises
                 MuscleGroup newMuscleGroup =
                     context.MuscleGroups.Single(c => c.ID == addExerciseViewModel.MuscleGroupID);
@@ -76,7 +76,7 @@ namespace RandomWorkout.Controllers
             }
             else
             {
-                AddExerciseViewModel populateFields = new AddExerciseViewModel(context.MuscleGroups.ToList());
+                AddExerciseViewModel populateFields = new AddExerciseViewModel(context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList());
                 //This is needed in case the ModelState is not valid, it will keep the categories drop down populated.
                 return View(populateFields);
             }

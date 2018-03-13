@@ -256,6 +256,38 @@ namespace WorkoutGenerator.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("WorkoutGenerator.Models.ExerciseRecord", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<int>("ExerciseID");
+
+                    b.Property<string>("OwnerId");
+
+                    b.Property<string>("Reps");
+
+                    b.Property<string>("Sets");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("Weight");
+
+                    b.Property<int>("WorkoutID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ExerciseID");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("WorkoutID");
+
+                    b.ToTable("ExerciseRecords");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -338,6 +370,23 @@ namespace WorkoutGenerator.Migrations
                     b.HasOne("WorkoutGenerator.Models.ApplicationUser", "User")
                         .WithMany("Workouts")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("WorkoutGenerator.Models.ExerciseRecord", b =>
+                {
+                    b.HasOne("RandomWorkout.Models.Exercise", "Exercise")
+                        .WithMany("ExerciseRecords")
+                        .HasForeignKey("ExerciseID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WorkoutGenerator.Models.ApplicationUser", "User")
+                        .WithMany("ExerciseRecords")
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("RandomWorkout.Models.Workout", "Workout")
+                        .WithMany("ExerciseRecords")
+                        .HasForeignKey("WorkoutID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
