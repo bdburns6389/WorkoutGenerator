@@ -21,77 +21,298 @@
 
     -->
     <!-- Default stylesheets-->
-    <link href="assets/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Template specific stylesheets-->
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Volkhov:400i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-    <link href="assets/lib/animate.css/animate.css" rel="stylesheet">
-    <link href="assets/lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="assets/lib/et-line-font/et-line-font.css" rel="stylesheet">
-    <link href="assets/lib/flexslider/flexslider.css" rel="stylesheet">
-    <link href="assets/lib/owl.carousel/dist/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="assets/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
-    <link href="assets/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
-    <link href="assets/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
+    <link href="~/lib/animate.css/animate.css" rel="stylesheet">
+    <link href="~/lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/lib/et-line-font/et-line-font.css" rel="stylesheet">
+    <link href="~/lib/flexslider/flexslider.css" rel="stylesheet">
+    <link href="~/lib/owl.carousel/dist/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
+    <link href="~/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
+    <link href="~/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
     <!-- Main stylesheet and color file-->
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link id="color-scheme" href="assets/css/colors/default.css" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet">
+    <link id="color-scheme" href="~/css/colors/default.css" rel="stylesheet">
 </head>
 <body>
     <main>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">WorkoutGenerator</a>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">WorkoutGenerator</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a asp-area="" asp-controller="Exercise" asp-action="Index">Exercises</a></li>
+                        <li><a asp-area="" asp-controller="Workout" asp-action="Index">Workouts</a></li>
+                        <li><a asp-area="" asp-controller="Exercise" asp-action="Add">Add Exercises</a></li>
+                        <li><a asp-area="" asp-controller="MuscleGroup" asp-action="Add">Add MuscleGroup</a></li>
+                    </ul>
+                    @await Html.PartialAsync("_LoginPartial")
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Exercise" asp-action="Index">Exercises</a></li>
-                    <li><a asp-area="" asp-controller="Workout" asp-action="Index">Workouts</a></li>
-                    <li><a asp-area="" asp-controller="Exercise" asp-action="Add">Add Exercises</a></li>
-                    <li><a asp-area="" asp-controller="MuscleGroup" asp-action="Add">Add MuscleGroup</a></li>
-                </ul>
-                @await Html.PartialAsync("_LoginPartial")
+        </nav>
+
+
+      <!--  <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>-->
+        <nav class="navbar navbar-custom navbar-fixed-top navbar-transparent" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="index.html">Workout Tracker</a>
+                </div>
+                <div class="collapse navbar-collapse" id="custom-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Exercises</a><!--One Drop Down Menu-->
+                            <ul class="dropdown-menu">
+                                <li><a href="index_mp_fullscreen_video_background.html">Add</a></li>
+                                <li><a href="index_op_fullscreen_gradient_overlay.html">Remove</a></li>
+                                <li><a href="index_agency.html">View</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a asp-area="" asp-controller="MuscleGroup" asp-action="Add">Add MuscleGroup</a></li>
+
+
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Muscle Group</a><!--Second Drop Down Menu-->
+                            <ul class="dropdown-menu">
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" asp-area="" asp-controller="MuscleGroup" asp-action="Add" data-toggle="dropdown">Add</a>
+                                   
+                                </li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">View</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="index_mp_fullscreen_flexslider.html">Fulscreen</a></li>
+                                        <li><a href="index_mp_classic_flexslider.html">Classic</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">Remove</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="index_mp_fullscreen_video_background.html">Fulscreen</a></li>
+                                        <li><a href="index_mp_classic_video_background.html">Classic</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Workout</a><!--Third Drop Down Menu-->
+                            <ul class="dropdown-menu" role="menu">
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">Add</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="portfolio_boxed_col_2.html">2 Columns</a></li>
+                                        <li><a href="portfolio_boxed_col_3.html">3 Columns</a></li>
+                                        <li><a href="portfolio_boxed_col_4.html">4 Columns</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">View</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="portfolio_boxed_gutter_col_2.html">2 Columns</a></li>
+                                        <li><a href="portfolio_boxed_gutter_col_3.html">3 Columns</a></li>
+                                        <li><a href="portfolio_boxed_gutter_col_4.html">4 Columns</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">Remove</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="portfolio_full_width_col_2.html">2 Columns</a></li>
+                                        <li><a href="portfolio_full_width_col_3.html">3 Columns</a></li>
+                                        <li><a href="portfolio_full_width_col_4.html">4 Columns</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Exercise Records</a><!--Fourth Drop Down Menu-->
+                            <ul class="dropdown-menu" role="menu">
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">Add</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="blog_standard_left_sidebar.html">Left Sidebar</a></li>
+                                        <li><a href="blog_standard_right_sidebar.html">Right Sidebar</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">View</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="blog_grid_col_2.html">2 Columns</a></li>
+                                        <li><a href="blog_grid_col_3.html">3 Columns</a></li>
+                                        <li><a href="blog_grid_col_4.html">4 Columns</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">Remove</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="blog_grid_masonry_col_2.html">2 Columns</a></li>
+                                        <li><a href="blog_grid_masonry_col_3.html">3 Columns</a></li>
+                                        <li><a href="blog_grid_masonry_col_4.html">4 Columns</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
+        </nav>
+        <section class="home-section home-parallax home-fade home-full-height bg-dark-60 agency-page-header" id="home" data-background="~/img/john-price.jpg">
+            <div class="titan-caption">
+                <div class="caption-content">
+                    <div class="font-alt mb-30 titan-title-size-1">Build your best you.</div>
+                    <div class="font-alt mb-40 titan-title-size-3">
+                        Fitness is about <span class="rotate">consistency | determination | persistance</span>
+                    </div><a class="section-scroll btn btn-border-w btn-circle" href="#about">Learn More</a><!--Use asp links to send to contact page -->
+                </div>
+            </div>
+        </section>
+
+
+
+        <div class="container body-content">
+            @RenderBody()
+
+            <hr class="divider-w">
+
+            <section class="module bg-dark-60 pt-0 pb-0 parallax-bg testimonial" data-background="~/img/johannes-waibel.jpg">
+                <div class="testimonials-slider pt-140 pb-140">
+                    <ul class="slides">
+                        <li>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="module-icon"><span class="icon-quote"></span></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8 col-sm-offset-2">
+                                        <blockquote class="testimonial-text font-alt">Exercise is King. Nutrition is Queen. Put Them together and you've got a Kingdom</blockquote>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4 col-sm-offset-4">
+                                        <div class="testimonial-author">
+                                            <div class="testimonial-caption font-alt">
+                                                <div class="testimonial-title">Jack LaLanne</div>
+                                                <div class="testimonial-descr">"Godfather of Fitness"</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="module-icon"><span class="icon-quote"></span></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8 col-sm-offset-2">
+                                        <blockquote class="testimonial-text font-alt">I fear not the man who has practiced 10,000 kicks once, but I fear the man who has practiced one kick 10,000 times</blockquote>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4 col-sm-offset-4">
+                                        <div class="testimonial-author">
+                                            <div class="testimonial-caption font-alt">
+                                                <div class="testimonial-title">Bruce Lee</div>
+                                                <div class="testimonial-descr">Inventor of Jeet Kune DO</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="module-icon"><span class="icon-quote"></span></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8 col-sm-offset-2">
+                                        <blockquote class="testimonial-text font-alt">Success isn't always about greatness. It's about consistency. Consistent, hard work gains success. Greatness will come</blockquote>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4 col-sm-offset-4">
+                                        <div class="testimonial-author">
+                                            <div class="testimonial-caption font-alt">
+                                                <div class="testimonial-title">Dwayne Johnson</div>
+                                                <div class="testimonial-descr">"The Rock"</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <hr />
+            <footer>
+                <p>&copy; 2018 - WorkoutGenerator</p>
+            </footer>
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - WorkoutGenerator</p>
-        </footer>
-    </div>
 
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
+        <environment include="Development">
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+        </environment>
+        <environment exclude="Development">
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"
+                    integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+            </script>
+            <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+            </script>
+            <script src="~/js/site.min.js" asp-append-version="true"></script>
+        </environment>
+        <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-doubleup"></i></a></div>
 
-    @RenderSection("Scripts", required: false)
-</main>
+        @RenderSection("Scripts", required: false)
+    </main>
+        <!--  
+    JavaScripts
+    =============================================
+    -->
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/wow/dist/wow.js"></script>
+    <script src="~/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
+    <script src="~/lib/isotope/dist/isotope.pkgd.js"></script>
+    <script src="~/lib/imagesloaded/imagesloaded.pkgd.js"></script>
+    <script src="~/lib/flexslider/jquery.flexslider.js"></script>
+    <script src="~/lib/owl.carousel/dist/owl.carousel.min.js"></script>
+    <script src="~/lib/smoothscroll.js"></script>
+    <script src="~/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
+    <script src="~/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
+    <script src="~/js/plugins.js"></script>
+    <script src="~/js/main.js"></script>
 </body>
 </html>
