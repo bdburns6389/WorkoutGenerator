@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using RandomWorkout.Models;
 
-namespace WorkoutGenerator.ViewModel
+namespace WorkoutGenerator.ViewModels
 {
     public class AddExerciseRecordViewModel
     {
@@ -26,10 +22,6 @@ namespace WorkoutGenerator.ViewModel
         public string ExerciseID { get; set; }
         //Link to Workout
         public string WorkoutID { get; set; }
-        
-        public AddExerciseRecordViewModel()
-        {
-
-        }
     }
 }
+

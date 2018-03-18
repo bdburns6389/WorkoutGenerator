@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using RandomWorkout.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using WorkoutGenerator.Models;
 
-namespace RandomWorkout.ViewModels
+namespace WorkoutGenerator.ViewModels
 {
     public class AddWorkoutExerciseViewModel
     {

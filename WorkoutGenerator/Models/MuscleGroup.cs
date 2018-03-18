@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using WorkoutGenerator.Models;
 
-namespace RandomWorkout.Models
+namespace WorkoutGenerator.Models
 {
     public class MuscleGroup
     {

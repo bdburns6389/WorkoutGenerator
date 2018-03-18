@@ -1,7 +1,7 @@
-﻿using RandomWorkout.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using WorkoutGenerator.Models;
 
-namespace RandomWorkout.ViewModels
+namespace WorkoutGenerator.ViewModels
 {
     public class ViewWorkoutViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RandomWorkout.ViewModels
+namespace WorkoutGenerator.ViewModels
 {
     public class AddWorkoutViewModel
     {

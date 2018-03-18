@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using RandomWorkout.Models;
-using RandomWorkout.ViewModels;
 using WorkoutGenerator.Data;
 using WorkoutGenerator.Models;
+using WorkoutGenerator.ViewModels;
 
-namespace RandomWorkout.Controllers
+namespace WorkoutGenerator.Controllers
 {
     public class MuscleGroupController : Controller
     {

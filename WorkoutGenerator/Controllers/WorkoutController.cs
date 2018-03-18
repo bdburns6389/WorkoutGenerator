@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RandomWorkout.Models;
-using RandomWorkout.ViewModels;
 using WorkoutGenerator.Data;
 using WorkoutGenerator.Models;
+using WorkoutGenerator.ViewModels;
 
 namespace RandomWorkout.Controllers
 {

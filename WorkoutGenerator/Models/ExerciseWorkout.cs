@@ -1,4 +1,4 @@
-﻿namespace RandomWorkout.Models
+﻿namespace WorkoutGenerator.Models
 {
     public class ExerciseWorkout
     {
