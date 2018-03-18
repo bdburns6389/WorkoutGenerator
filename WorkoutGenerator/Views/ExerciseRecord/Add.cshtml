@@ -1,0 +1,12 @@
+﻿@model WorkoutGenerator.ViewModels.AddExerciseRecordViewModel
+
+<h1>Add Exercise Record</h1>
+<!--Needs to be in a for loop for each exercise in workout-->
+<!--can use 'at' symbol to get name of exercise, and put that before 'form' element-->
+<form asp-controller="ExerciseRecord" asp-action="Add" method="post">
+    <div class="form-group">
+        <label asp-for="Sets"></label>
+        <input class="form-control" asp-for="Sets" />
+        <span asp-validation-for="Sets"></span>
+    </div>
+</form>

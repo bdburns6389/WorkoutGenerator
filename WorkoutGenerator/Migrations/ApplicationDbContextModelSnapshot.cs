@@ -128,7 +128,7 @@ namespace WorkoutGenerator.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("RandomWorkout.Models.Exercise", b =>
+            modelBuilder.Entity("WorkoutGenerator.Models.Exercise", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -154,7 +154,7 @@ namespace WorkoutGenerator.Migrations
                     b.ToTable("Exercises");
                 });
 
-            modelBuilder.Entity("RandomWorkout.Models.ExerciseWorkout", b =>
+            modelBuilder.Entity("WorkoutGenerator.Models.ExerciseWorkout", b =>
                 {
                     b.Property<int>("ExerciseID");
 
@@ -167,7 +167,7 @@ namespace WorkoutGenerator.Migrations
                     b.ToTable("ExerciseWorkouts");
                 });
 
-            modelBuilder.Entity("RandomWorkout.Models.MuscleGroup", b =>
+            modelBuilder.Entity("WorkoutGenerator.Models.MuscleGroup", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -185,7 +185,7 @@ namespace WorkoutGenerator.Migrations
                     b.ToTable("MuscleGroups");
                 });
 
-            modelBuilder.Entity("RandomWorkout.Models.Workout", b =>
+            modelBuilder.Entity("WorkoutGenerator.Models.Workout", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -333,9 +333,9 @@ namespace WorkoutGenerator.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("RandomWorkout.Models.Exercise", b =>
+            modelBuilder.Entity("WorkoutGenerator.Models.Exercise", b =>
                 {
-                    b.HasOne("RandomWorkout.Models.MuscleGroup", "MuscleGroup")
+                    b.HasOne("WorkoutGenerator.Models.MuscleGroup", "MuscleGroup")
                         .WithMany("Exercises")
                         .HasForeignKey("MuscleGroupID")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -345,27 +345,27 @@ namespace WorkoutGenerator.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("RandomWorkout.Models.ExerciseWorkout", b =>
+            modelBuilder.Entity("WorkoutGenerator.Models.ExerciseWorkout", b =>
                 {
-                    b.HasOne("RandomWorkout.Models.Exercise", "Exercise")
+                    b.HasOne("WorkoutGenerator.Models.Exercise", "Exercise")
                         .WithMany("ExerciseWorkouts")
                         .HasForeignKey("ExerciseID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("RandomWorkout.Models.Workout", "Workout")
+                    b.HasOne("WorkoutGenerator.Models.Workout", "Workout")
                         .WithMany("ExerciseWorkouts")
                         .HasForeignKey("WorkoutID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("RandomWorkout.Models.MuscleGroup", b =>
+            modelBuilder.Entity("WorkoutGenerator.Models.MuscleGroup", b =>
                 {
                     b.HasOne("WorkoutGenerator.Models.ApplicationUser", "User")
                         .WithMany("MuscleGroups")
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("RandomWorkout.Models.Workout", b =>
+            modelBuilder.Entity("WorkoutGenerator.Models.Workout", b =>
                 {
                     b.HasOne("WorkoutGenerator.Models.ApplicationUser", "User")
                         .WithMany("Workouts")
@@ -374,7 +374,7 @@ namespace WorkoutGenerator.Migrations
 
             modelBuilder.Entity("WorkoutGenerator.Models.ExerciseRecord", b =>
                 {
-                    b.HasOne("RandomWorkout.Models.Exercise", "Exercise")
+                    b.HasOne("WorkoutGenerator.Models.Exercise", "Exercise")
                         .WithMany("ExerciseRecords")
                         .HasForeignKey("ExerciseID")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -383,7 +383,7 @@ namespace WorkoutGenerator.Migrations
                         .WithMany("ExerciseRecords")
                         .HasForeignKey("UserId");
 
-                    b.HasOne("RandomWorkout.Models.Workout", "Workout")
+                    b.HasOne("WorkoutGenerator.Models.Workout", "Workout")
                         .WithMany("ExerciseRecords")
                         .HasForeignKey("WorkoutID")
                         .OnDelete(DeleteBehavior.Cascade);

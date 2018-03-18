@@ -7,7 +7,7 @@ using WorkoutGenerator.Data;
 using WorkoutGenerator.Models;
 using WorkoutGenerator.ViewModels;
 
-namespace RandomWorkout.Controllers
+namespace WorkoutGenerator.Controllers
 {
     public class WorkoutController : Controller
     {
