@@ -1,1 +1,22 @@
 ﻿Exercises are now filtered by user, next step is to make workouts specific to user.
+
+At first, all I want to be able to do is have a database of exercises, add to them by category(legs, back,...), 
+and be able to add
+categories.  Then allow removal of category or exercise from database, exercise would be dependant on category.
+
+Next I will want to be able to pull from that database a random list of exercises(one from each column)
+
+Next pull random list(one from each column) but no repetition.
+
+Next pull random list(one from each column) with no reptition because there is another database of used 
+exercises that will have a time stamp and stay in that database for six days.
+
+
+BaseController:  Inherit from a base controller that will have "
+	    string user = User.Identity.Name;
+            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);"
+*Will need to use sessions to work*
+
+
+NEXT TODO:  Add ExerciseRecords, each exercise should have input for set, reps, and weight.
+	needs to go into database according to id of exercise.
