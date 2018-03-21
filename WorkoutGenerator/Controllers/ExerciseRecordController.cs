@@ -28,7 +28,10 @@ namespace WorkoutGenerator.Controllers
 
         public IActionResult Add()
         {//Create form for each exercise to have sets reps and weight to submit
-            return View();
+            string user = User.Identity.Name;
+            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            AddExerciseRecordViewModel addExerciseRecordViewModel = new AddExerciseRecordViewModel();
+            return View(addExerciseRecordViewModel);
         }
 
         [HttpPost]
