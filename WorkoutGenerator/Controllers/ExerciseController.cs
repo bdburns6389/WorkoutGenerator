@@ -41,7 +41,7 @@ namespace WorkoutGenerator.Controllers
         {
             string user = User.Identity.Name;
             ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
-            AddExerciseViewModel addExerciseViewModel = new AddExerciseViewModel(context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList());//TODO use a .Where() to pull only musclegroups by user.  First connect user to musclegroups.
+            AddExerciseViewModel addExerciseViewModel = new AddExerciseViewModel(context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList());
             return View(addExerciseViewModel);
         }
 

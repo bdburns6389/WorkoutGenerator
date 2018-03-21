@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WorkoutGenerator.Data;
 using WorkoutGenerator.Models;
+using WorkoutGenerator.ViewModels;
 
 namespace WorkoutGenerator.Controllers
 {
@@ -25,9 +27,37 @@ namespace WorkoutGenerator.Controllers
         }
 
         public IActionResult Add()
-        {
+        {//Create form for each exercise to have sets reps and weight to submit
             return View();
         }
 
+        [HttpPost]
+        public IActionResult Add(AddExerciseRecordViewModel addExerciseRecordViewModel)
+        {//Create records of exercise sets reps and weights to be added to database.
+            if (ModelState.IsValid)
+            {
+                string user = User.Identity.Name;
+                ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+
+                ExerciseRecord newRecord = new ExerciseRecord
+                {
+                    Sets = addExerciseRecordViewModel.Sets,
+                    Reps = addExerciseRecordViewModel.Reps,
+                    Weight = addExerciseRecordViewModel.Weight,
+                    DateCreated = DateTime.Now,
+                    OwnerId = userLoggedIn.Id,//TODO Not Sure if creation of newRecord is correct.
+                    WorkoutID = addExerciseRecordViewModel.WorkoutID,
+                    ExerciseID = addExerciseRecordViewModel.ExerciseID
+                };
+                context.ExerciseRecords.Add(newRecord);
+                context.SaveChanges();
+
+                return Redirect("/ExerciseRecord/ViewExerciseRecord" + newRecord.ID);
+            }
+            else
+            {
+                return View(addExerciseRecordViewModel);
+            }
+        }
     }
 }

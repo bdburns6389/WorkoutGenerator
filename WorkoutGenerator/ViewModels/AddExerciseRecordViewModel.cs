@@ -19,9 +19,9 @@ namespace WorkoutGenerator.ViewModels
         //Link to user
         public string OwnerId { get; set; }
         //Link to Exercise
-        public string ExerciseID { get; set; }
+        public int ExerciseID { get; set; }
         //Link to Workout
-        public string WorkoutID { get; set; }
+        public int WorkoutID { get; set; }
     }
 }
 
