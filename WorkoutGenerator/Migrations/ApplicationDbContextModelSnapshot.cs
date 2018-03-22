@@ -128,83 +128,6 @@ namespace WorkoutGenerator.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("WorkoutGenerator.Models.Exercise", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("DateCreated");
-
-                    b.Property<string>("Description");
-
-                    b.Property<int>("MuscleGroupID");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("OwnerId");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("MuscleGroupID");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Exercises");
-                });
-
-            modelBuilder.Entity("WorkoutGenerator.Models.ExerciseWorkout", b =>
-                {
-                    b.Property<int>("ExerciseID");
-
-                    b.Property<int>("WorkoutID");
-
-                    b.HasKey("ExerciseID", "WorkoutID");
-
-                    b.HasIndex("WorkoutID");
-
-                    b.ToTable("ExerciseWorkouts");
-                });
-
-            modelBuilder.Entity("WorkoutGenerator.Models.MuscleGroup", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("OwnerId");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("MuscleGroups");
-                });
-
-            modelBuilder.Entity("WorkoutGenerator.Models.Workout", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("DateCreated");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("OwnerId");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Workouts");
-                });
-
             modelBuilder.Entity("WorkoutGenerator.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -256,14 +179,82 @@ namespace WorkoutGenerator.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("WorkoutGenerator.Models.Record", b =>
+            modelBuilder.Entity("WorkoutGenerator.Models.Exercise", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DateCreated");
 
+                    b.Property<string>("Description");
+
+                    b.Property<int>("MuscleGroupID");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("OwnerId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("MuscleGroupID");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Exercises");
+                });
+
+            modelBuilder.Entity("WorkoutGenerator.Models.ExerciseRecord", b =>
+                {
                     b.Property<int>("ExerciseID");
+
+                    b.Property<int>("RecordID");
+
+                    b.HasKey("ExerciseID", "RecordID");
+
+                    b.HasIndex("RecordID");
+
+                    b.ToTable("ExerciseRecords");
+                });
+
+            modelBuilder.Entity("WorkoutGenerator.Models.ExerciseWorkout", b =>
+                {
+                    b.Property<int>("ExerciseID");
+
+                    b.Property<int>("WorkoutID");
+
+                    b.HasKey("ExerciseID", "WorkoutID");
+
+                    b.HasIndex("WorkoutID");
+
+                    b.ToTable("ExerciseWorkouts");
+                });
+
+            modelBuilder.Entity("WorkoutGenerator.Models.MuscleGroup", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("OwnerId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MuscleGroups");
+                });
+
+            modelBuilder.Entity("WorkoutGenerator.Models.Record", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("DateCreated");
 
                     b.Property<string>("OwnerId");
 
@@ -279,13 +270,31 @@ namespace WorkoutGenerator.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ExerciseID");
-
                     b.HasIndex("UserId");
 
                     b.HasIndex("WorkoutID");
 
                     b.ToTable("Records");
+                });
+
+            modelBuilder.Entity("WorkoutGenerator.Models.Workout", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("OwnerId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Workouts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -345,6 +354,19 @@ namespace WorkoutGenerator.Migrations
                         .HasForeignKey("UserId");
                 });
 
+            modelBuilder.Entity("WorkoutGenerator.Models.ExerciseRecord", b =>
+                {
+                    b.HasOne("WorkoutGenerator.Models.Exercise", "Exercise")
+                        .WithMany("ExerciseRecords")
+                        .HasForeignKey("ExerciseID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WorkoutGenerator.Models.Record", "Record")
+                        .WithMany("ExerciseRecords")
+                        .HasForeignKey("RecordID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("WorkoutGenerator.Models.ExerciseWorkout", b =>
                 {
                     b.HasOne("WorkoutGenerator.Models.Exercise", "Exercise")
@@ -365,20 +387,8 @@ namespace WorkoutGenerator.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("WorkoutGenerator.Models.Workout", b =>
-                {
-                    b.HasOne("WorkoutGenerator.Models.ApplicationUser", "User")
-                        .WithMany("Workouts")
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("WorkoutGenerator.Models.Record", b =>
                 {
-                    b.HasOne("WorkoutGenerator.Models.Exercise", "Exercise")
-                        .WithMany("Records")
-                        .HasForeignKey("ExerciseID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("WorkoutGenerator.Models.ApplicationUser", "User")
                         .WithMany("Records")
                         .HasForeignKey("UserId");
@@ -387,6 +397,13 @@ namespace WorkoutGenerator.Migrations
                         .WithMany("Records")
                         .HasForeignKey("WorkoutID")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WorkoutGenerator.Models.Workout", b =>
+                {
+                    b.HasOne("WorkoutGenerator.Models.ApplicationUser", "User")
+                        .WithMany("Workouts")
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

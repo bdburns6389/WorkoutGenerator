@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,14 +18,12 @@ namespace WorkoutGenerator.Models
         [ForeignKey("Id")]
         public string OwnerId { get; set; }
         public virtual ApplicationUser User { get; set; }
-        //ForeignKey for Exercises
-        [ForeignKey("ID")]
-        public int ExerciseID { get; set;}
-        public Exercise Exercise { get; set; }
+  
         //ForeignKey for Workouts
         [ForeignKey("ID")]
         public int WorkoutID { get; set; }
         public Workout Workout { get; set; }
 
+        public IList<ExerciseRecord> ExerciseRecords { get; set; } = new List<ExerciseRecord>();
     }
 }

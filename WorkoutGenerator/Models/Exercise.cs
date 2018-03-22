@@ -21,9 +21,10 @@ namespace WorkoutGenerator.Models
         public string  OwnerId { get; set; }
         public virtual ApplicationUser User { get; set; }
 
-        public IList<Record> Records { get; set; }
+    
 
         public IList<ExerciseWorkout> ExerciseWorkouts { get; set; } = new List<ExerciseWorkout>();
+        public IList<ExerciseRecord> ExerciseRecords { get; set; } = new List<ExerciseRecord>();
     }
 
 }

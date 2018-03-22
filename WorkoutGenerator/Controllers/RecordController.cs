@@ -50,7 +50,6 @@ namespace WorkoutGenerator.Controllers
                     DateCreated = DateTime.Now,
                     OwnerId = userLoggedIn.Id,//TODO Not Sure if creation of newRecord is correct.
                     WorkoutID = addRecordViewModel.WorkoutID,
-                    ExerciseID = addRecordViewModel.ExerciseID
                 };
                 context.Records.Add(newRecord);
                 context.SaveChanges();
