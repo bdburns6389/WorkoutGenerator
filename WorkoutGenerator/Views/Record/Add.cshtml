@@ -1,11 +1,11 @@
-﻿@model WorkoutGenerator.ViewModels.AddExerciseRecordViewModel
+﻿@model WorkoutGenerator.ViewModels.AddRecordViewModel
 
 <h1>Add Exercise Record</h1>
 <!--TODO Needs to be in a for loop for each exercise in workout-->
 <!--can use 'at' symbol to get name of exercise, and put that before 'form' element-->
 
 <!--TODO What does this need to actually loop through in a 'foreach' loop?-->
-<form asp-controller="ExerciseRecord" asp-action="Add" method="post">
+<form asp-controller="Record" asp-action="Add" method="post">
     <div class="form-group">
         <label asp-for="Sets"></label>
         <input class="form-control" asp-for="Sets" />

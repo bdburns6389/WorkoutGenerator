@@ -228,7 +228,7 @@ namespace WorkoutGenerator.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExerciseRecords",
+                name: "Records",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -244,21 +244,21 @@ namespace WorkoutGenerator.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExerciseRecords", x => x.ID);
+                    table.PrimaryKey("PK_Records", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_ExerciseRecords_Exercises_ExerciseID",
+                        name: "FK_Records_Exercises_ExerciseID",
                         column: x => x.ExerciseID,
                         principalTable: "Exercises",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ExerciseRecords_AspNetUsers_UserId",
+                        name: "FK_Records_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ExerciseRecords_Workouts_WorkoutID",
+                        name: "FK_Records_Workouts_WorkoutID",
                         column: x => x.WorkoutID,
                         principalTable: "Workouts",
                         principalColumn: "ID",
@@ -329,18 +329,18 @@ namespace WorkoutGenerator.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExerciseRecords_ExerciseID",
-                table: "ExerciseRecords",
+                name: "IX_Records_ExerciseID",
+                table: "Records",
                 column: "ExerciseID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExerciseRecords_UserId",
-                table: "ExerciseRecords",
+                name: "IX_Records_UserId",
+                table: "Records",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExerciseRecords_WorkoutID",
-                table: "ExerciseRecords",
+                name: "IX_Records_WorkoutID",
+                table: "Records",
                 column: "WorkoutID");
 
             migrationBuilder.CreateIndex(
@@ -387,7 +387,7 @@ namespace WorkoutGenerator.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ExerciseRecords");
+                name: "Records");
 
             migrationBuilder.DropTable(
                 name: "ExerciseWorkouts");

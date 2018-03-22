@@ -257,7 +257,7 @@ namespace WorkoutGenerator.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("WorkoutGenerator.Models.ExerciseRecord", b =>
+            modelBuilder.Entity("WorkoutGenerator.Models.Record", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -286,7 +286,7 @@ namespace WorkoutGenerator.Migrations
 
                     b.HasIndex("WorkoutID");
 
-                    b.ToTable("ExerciseRecords");
+                    b.ToTable("Records");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -373,19 +373,19 @@ namespace WorkoutGenerator.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("WorkoutGenerator.Models.ExerciseRecord", b =>
+            modelBuilder.Entity("WorkoutGenerator.Models.Record", b =>
                 {
                     b.HasOne("WorkoutGenerator.Models.Exercise", "Exercise")
-                        .WithMany("ExerciseRecords")
+                        .WithMany("Records")
                         .HasForeignKey("ExerciseID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WorkoutGenerator.Models.ApplicationUser", "User")
-                        .WithMany("ExerciseRecords")
+                        .WithMany("Records")
                         .HasForeignKey("UserId");
 
                     b.HasOne("WorkoutGenerator.Models.Workout", "Workout")
-                        .WithMany("ExerciseRecords")
+                        .WithMany("Records")
                         .HasForeignKey("WorkoutID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

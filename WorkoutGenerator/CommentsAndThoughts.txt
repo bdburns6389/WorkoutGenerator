@@ -18,5 +18,5 @@ BaseController:  Inherit from a base controller that will have "
 *Will need to use sessions to work*
 
 
-NEXT TODO:  Add ExerciseRecords, each exercise should have input for set, reps, and weight.
+NEXT TODO:  Add Records, each exercise should have input for set, reps, and weight.
 	needs to go into database according to id of exercise.

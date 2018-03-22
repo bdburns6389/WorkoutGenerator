@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WorkoutGenerator.Models
 {
-    public class ExerciseRecord
+    public class Record
     {
         [Key]
         public int ID { get; set; }

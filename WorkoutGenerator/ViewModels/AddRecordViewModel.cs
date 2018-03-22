@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WorkoutGenerator.ViewModels
 {
-    public class AddExerciseRecordViewModel
+    public class AddRecordViewModel
     {
         [Required(ErrorMessage = "Please enter number of sets")]
         public string Sets { get; set; }
