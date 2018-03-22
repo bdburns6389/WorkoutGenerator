@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using WorkoutGenerator.Models;
 
 namespace WorkoutGenerator.ViewModels
 {
@@ -22,6 +24,8 @@ namespace WorkoutGenerator.ViewModels
         public int ExerciseID { get; set; }
         //Link to Workout
         public int WorkoutID { get; set; }
+
+        public IList<ExerciseWorkout> Exercises { get; set; }
     }
 }
 

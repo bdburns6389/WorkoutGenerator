@@ -6,21 +6,25 @@
 
 <!--TODO What does this need to actually loop through in a 'foreach' loop?-->
 <form asp-controller="Record" asp-action="Add" method="post">
+@foreach (var exercise in Model.Exercises)
+{
+    <h4>@exercise.Exercise.Name</h4>
     <div class="form-group">
-        <label asp-for="Sets"></label>
-        <input class="form-control" asp-for="Sets" />
-        <span asp-validation-for="Sets"></span>
+        <label asp-for="@Model.Sets"></label>
+        <input class="form-control" asp-for="@Model.Sets" />
+        <span asp-validation-for="@Model.Sets"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Reps"></label>
-        <input class="form-control" asp-for="Reps" />
-        <span asp-validation-for="Reps"></span>
+        <label asp-for="@Model.Reps"></label>
+        <input class="form-control" asp-for="@Model.Reps" />
+        <span asp-validation-for="@Model.Reps"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Weight"></label>
-        <input class="form-control" asp-for="Weight" />
-        <span asp-validation-for="Weight"></span>
+        <label asp-for="@Model.Weight"></label>
+        <input class="form-control" asp-for="@Model.Weight" />
+        <span asp-validation-for="@Model.Weight"></span>
     </div>
+}
     <input type="hidden" name="WorkoutID" value="@Model.WorkoutID" /><!--Some of these hiddens should be outside the foreach loop-->
     <input type="hidden" name="ExerciseID" value="@Model.ExerciseID" />
     <input type="hidden" name="OwnerID" value="@Model.OwnerId" />
