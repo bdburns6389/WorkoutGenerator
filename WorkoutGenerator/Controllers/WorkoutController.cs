@@ -85,9 +85,10 @@ namespace WorkoutGenerator.Controllers
         {
             string user = User.Identity.Name;
             ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
-            
+
             Workout workout = context.Workouts.Single(m => m.ID == id);
             List<Exercise> exercises = context.Exercises.Where(c => c.OwnerId == userLoggedIn.Id).ToList();//OwnerId specifies user for exercise list.
+
             return View(new AddWorkoutExerciseViewModel(workout, exercises));
         }
 

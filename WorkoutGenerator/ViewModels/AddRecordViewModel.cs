@@ -26,6 +26,8 @@ namespace WorkoutGenerator.ViewModels
         public int WorkoutID { get; set; }
 
         public IList<ExerciseWorkout> Exercises { get; set; }
+
+        public AddRecordViewModel() { }
     }
 }
 
