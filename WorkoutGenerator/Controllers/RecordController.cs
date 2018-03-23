@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WorkoutGenerator.Data;
 using WorkoutGenerator.Models;
 using WorkoutGenerator.ViewModels;
@@ -26,14 +27,26 @@ namespace WorkoutGenerator.Controllers
             return View(filteredWorkouts);
         }
 
-        public IActionResult Add()
+        public IActionResult Add(int id)
         {//Create form for each exercise to have sets reps and weight to submit
+            //!!!!!!!!!!!!!!TAKEN FROM WORKOUT CONTROLLER!!!!!!!!!  MAY NEED CHANGING!!!!!!!!!!!!!!!!
             string user = User.Identity.Name;
             ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            List<ExerciseWorkout> exercises = context
+                .ExerciseWorkouts
+                .Include(item => item.Exercise)
+                .Where(cm => cm.WorkoutID == id && cm.Workout.OwnerId == userLoggedIn.Id)//cm.Workout.OwnerId == userLoggedIn.Id returns list of owner specific workouts
+                .ToList();
 
-            AddRecordViewModel addRecordViewModel = new AddRecordViewModel();
+            Workout workout = context.Workouts.Single(m => m.ID == id);
 
-            return View(addRecordViewModel);
+            AddRecordViewModel viewModel = new AddRecordViewModel
+            {
+                Workout = workout,
+                Exercises = exercises
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]

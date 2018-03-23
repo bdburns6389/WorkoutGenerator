@@ -1,32 +1,29 @@
 ﻿@model WorkoutGenerator.ViewModels.AddRecordViewModel
 
 <h1>Add Exercise Record</h1>
-<!--TODO Needs to be in a for loop for each exercise in workout-->
-<!--can use 'at' symbol to get name of exercise, and put that before 'form' element-->
 
-<!--TODO What does this need to actually loop through in a 'foreach' loop?-->
 <form asp-controller="Record" asp-action="Add" method="post">
-@foreach (var exercise in Model.Exercises)
-{
-    <h4>@exercise.Exercise.Name</h4>
-    <div class="form-group">
-        <label asp-for="@Model.Sets"></label>
-        <input class="form-control" asp-for="@Model.Sets" />
-        <span asp-validation-for="@Model.Sets"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="@Model.Reps"></label>
-        <input class="form-control" asp-for="@Model.Reps" />
-        <span asp-validation-for="@Model.Reps"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="@Model.Weight"></label>
-        <input class="form-control" asp-for="@Model.Weight" />
-        <span asp-validation-for="@Model.Weight"></span>
-    </div>
-}
+    @foreach (var exercise in Model.Exercises)
+    {
+        <h4>@exercise.Exercise.Name</h4>
+        <div class="form-group">
+            <label asp-for="@Model.Sets"></label>
+            <input class="form-control" asp-for="@Model.Sets" />
+            <span asp-validation-for="@Model.Sets"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Reps"></label>
+            <input class="form-control" asp-for="@Model.Reps" />
+            <span asp-validation-for="@Model.Reps"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Weight"></label>
+            <input class="form-control" asp-for="@Model.Weight" />
+            <span asp-validation-for="@Model.Weight"></span>
+        </div>
+        <input type="hidden" name="ExerciseID" value="@Model.ExerciseID" />
+    }
     <input type="hidden" name="WorkoutID" value="@Model.WorkoutID" /><!--Some of these hiddens should be outside the foreach loop-->
-    <input type="hidden" name="ExerciseID" value="@Model.ExerciseID" />
     <input type="hidden" name="OwnerID" value="@Model.OwnerId" />
 
     <input type="submit" value="Add Exercise Record" />
