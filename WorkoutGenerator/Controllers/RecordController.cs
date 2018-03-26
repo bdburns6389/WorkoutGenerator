@@ -50,12 +50,19 @@ namespace WorkoutGenerator.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(AddRecordViewModel addRecordViewModel)
+        public IActionResult Add(AddRecordViewModel addRecordViewModel, int id)
         {//Create records of exercise sets reps and weights to be added to database.
             if (ModelState.IsValid)
             {
                 string user = User.Identity.Name;
                 ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+                //exercises hopefully returns list of exercises from 'int id' parameter,
+                //which can then be used to iterate over each exercise put into record table
+                List<ExerciseWorkout> exercises = context
+                .ExerciseWorkouts
+                .Include(item => item.Exercise)
+                .Where(cm => cm.WorkoutID == id && cm.Workout.OwnerId == userLoggedIn.Id)
+                .ToList();
 
                 Record newRecord = new Record
                 {
