@@ -8,13 +8,15 @@ namespace WorkoutGenerator.Models
 {
     public class Exercise
     {
+        [Key]
+        public int ExerciseID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public MuscleGroup MuscleGroup { get; set; }
-        public int MuscleGroupID { get; set; }
         public DateTime DateCreated { get; set; }
-        [Key]
-        public int ID { get; set; }
+
+        public int MuscleGroupID { get; set; }
+        [ForeignKey("MuscleGroupID")]
+        public virtual MuscleGroup MuscleGroup { get; set; }
 
         //OwnerId and ApplicationUser User is used to make a OneToMany Relationship 
         [ForeignKey("Id")]

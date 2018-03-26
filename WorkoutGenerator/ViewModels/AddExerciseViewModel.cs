@@ -37,7 +37,7 @@ namespace WorkoutGenerator.ViewModels
             {
                 MuscleGroups.Add(new SelectListItem
                 {
-                    Value = i.ID.ToString(),
+                    Value = i.MuscleGroupID.ToString(),
                     Text = i.Name
                 });
             }

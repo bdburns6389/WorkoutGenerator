@@ -158,7 +158,7 @@ namespace WorkoutGenerator.Migrations
                 name: "MuscleGroups",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
+                    MuscleGroupID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     OwnerId = table.Column<string>(nullable: true),
@@ -166,7 +166,7 @@ namespace WorkoutGenerator.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MuscleGroups", x => x.ID);
+                    table.PrimaryKey("PK_MuscleGroups", x => x.MuscleGroupID);
                     table.ForeignKey(
                         name: "FK_MuscleGroups_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -179,7 +179,7 @@ namespace WorkoutGenerator.Migrations
                 name: "Workouts",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
+                    WorkoutID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
@@ -188,7 +188,7 @@ namespace WorkoutGenerator.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Workouts", x => x.ID);
+                    table.PrimaryKey("PK_Workouts", x => x.WorkoutID);
                     table.ForeignKey(
                         name: "FK_Workouts_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -201,7 +201,7 @@ namespace WorkoutGenerator.Migrations
                 name: "Exercises",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
+                    ExerciseID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: true),
@@ -212,12 +212,12 @@ namespace WorkoutGenerator.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Exercises", x => x.ID);
+                    table.PrimaryKey("PK_Exercises", x => x.ExerciseID);
                     table.ForeignKey(
                         name: "FK_Exercises_MuscleGroups_MuscleGroupID",
                         column: x => x.MuscleGroupID,
                         principalTable: "MuscleGroups",
-                        principalColumn: "ID",
+                        principalColumn: "MuscleGroupID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Exercises_AspNetUsers_UserId",
@@ -231,7 +231,7 @@ namespace WorkoutGenerator.Migrations
                 name: "Records",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
+                    RecordID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     OwnerId = table.Column<string>(nullable: true),
@@ -243,7 +243,7 @@ namespace WorkoutGenerator.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Records", x => x.ID);
+                    table.PrimaryKey("PK_Records", x => x.RecordID);
                     table.ForeignKey(
                         name: "FK_Records_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -254,7 +254,7 @@ namespace WorkoutGenerator.Migrations
                         name: "FK_Records_Workouts_WorkoutID",
                         column: x => x.WorkoutID,
                         principalTable: "Workouts",
-                        principalColumn: "ID",
+                        principalColumn: "WorkoutID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -272,13 +272,13 @@ namespace WorkoutGenerator.Migrations
                         name: "FK_ExerciseWorkouts_Exercises_ExerciseID",
                         column: x => x.ExerciseID,
                         principalTable: "Exercises",
-                        principalColumn: "ID",
+                        principalColumn: "ExerciseID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ExerciseWorkouts_Workouts_WorkoutID",
                         column: x => x.WorkoutID,
                         principalTable: "Workouts",
-                        principalColumn: "ID",
+                        principalColumn: "WorkoutID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -296,13 +296,13 @@ namespace WorkoutGenerator.Migrations
                         name: "FK_ExerciseRecords_Exercises_ExerciseID",
                         column: x => x.ExerciseID,
                         principalTable: "Exercises",
-                        principalColumn: "ID",
+                        principalColumn: "ExerciseID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ExerciseRecords_Records_RecordID",
                         column: x => x.RecordID,
                         principalTable: "Records",
-                        principalColumn: "ID",
+                        principalColumn: "RecordID",
                         onDelete: ReferentialAction.Cascade);
                 });
 

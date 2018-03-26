@@ -56,7 +56,7 @@ namespace WorkoutGenerator.Controllers
                 
                 // Add the new Exercise to my existing exercises
                 MuscleGroup newMuscleGroup =
-                    context.MuscleGroups.Single(c => c.ID == addExerciseViewModel.MuscleGroupID);
+                    context.MuscleGroups.Single(c => c.MuscleGroupID == addExerciseViewModel.MuscleGroupID);
                 Exercise newExercise = new Exercise
 
                 {
@@ -94,7 +94,7 @@ namespace WorkoutGenerator.Controllers
         {
             foreach (int exerciseId in exerciseIds)
             {
-                Exercise theExercise = context.Exercises.Single(c => c.ID == exerciseId);
+                Exercise theExercise = context.Exercises.Single(c => c.ExerciseID == exerciseId);
                 context.Exercises.Remove(theExercise);
             }
 

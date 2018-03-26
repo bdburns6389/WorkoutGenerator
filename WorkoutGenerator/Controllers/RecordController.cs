@@ -38,7 +38,7 @@ namespace WorkoutGenerator.Controllers
                 .Where(cm => cm.WorkoutID == id && cm.Workout.OwnerId == userLoggedIn.Id)//cm.Workout.OwnerId == userLoggedIn.Id returns list of owner specific workouts
                 .ToList();
 
-            Workout workout = context.Workouts.Single(m => m.ID == id);
+            Workout workout = context.Workouts.Single(m => m.WorkoutID == id);
 
             AddRecordViewModel viewModel = new AddRecordViewModel
             {

@@ -8,7 +8,7 @@ namespace WorkoutGenerator.Models
     public class Record
     {
         [Key]
-        public int ID { get; set; }
+        public int RecordID { get; set; }
         public string Sets { get; set; }
         public string Reps { get; set; }
         public string Weight { get; set; }
@@ -19,10 +19,10 @@ namespace WorkoutGenerator.Models
         public string OwnerId { get; set; }
         public virtual ApplicationUser User { get; set; }
   
-        //ForeignKey for Workouts
-        [ForeignKey("ID")]
+        //ForeignKey for Workouts//FOREIGNKEY GOES ON WORKOUT WORKOUT?j
         public int WorkoutID { get; set; }
-        public Workout Workout { get; set; }
+        [ForeignKey("WorkoutID")]
+        public virtual Workout Workout { get; set; }
 
         public IList<ExerciseRecord> ExerciseRecords { get; set; } = new List<ExerciseRecord>();
     }

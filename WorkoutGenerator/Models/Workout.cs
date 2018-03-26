@@ -9,7 +9,7 @@ namespace WorkoutGenerator.Models
     public class Workout
     {
         [Key]
-        public int ID { get; set; }
+        public int WorkoutID { get; set; }
         public string Name { get; set; }
         public DateTime DateCreated { get; set; }
 

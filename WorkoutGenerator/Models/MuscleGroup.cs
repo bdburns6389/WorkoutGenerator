@@ -8,7 +8,7 @@ namespace WorkoutGenerator.Models
     public class MuscleGroup
     {
         [Key]
-        public int ID { get; set; }
+        public int MuscleGroupID { get; set; }
         public string Name { get; set; }
         
 

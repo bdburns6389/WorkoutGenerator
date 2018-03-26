@@ -25,7 +25,7 @@ namespace WorkoutGenerator.ViewModels
             {
                 Exercises.Add(new SelectListItem
                 {
-                    Value = exercise.ID.ToString(),
+                    Value = exercise.ExerciseID.ToString(),
                     Text = exercise.Name
                 });
             }

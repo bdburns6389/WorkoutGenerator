@@ -11,7 +11,7 @@ using WorkoutGenerator.Data;
 namespace WorkoutGenerator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180322172133_InitialCreate")]
+    [Migration("20180326170214_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -182,7 +182,7 @@ namespace WorkoutGenerator.Migrations
 
             modelBuilder.Entity("WorkoutGenerator.Models.Exercise", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("ExerciseID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DateCreated");
@@ -197,7 +197,7 @@ namespace WorkoutGenerator.Migrations
 
                     b.Property<string>("UserId");
 
-                    b.HasKey("ID");
+                    b.HasKey("ExerciseID");
 
                     b.HasIndex("MuscleGroupID");
 
@@ -234,7 +234,7 @@ namespace WorkoutGenerator.Migrations
 
             modelBuilder.Entity("WorkoutGenerator.Models.MuscleGroup", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("MuscleGroupID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
@@ -243,7 +243,7 @@ namespace WorkoutGenerator.Migrations
 
                     b.Property<string>("UserId");
 
-                    b.HasKey("ID");
+                    b.HasKey("MuscleGroupID");
 
                     b.HasIndex("UserId");
 
@@ -252,7 +252,7 @@ namespace WorkoutGenerator.Migrations
 
             modelBuilder.Entity("WorkoutGenerator.Models.Record", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("RecordID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DateCreated");
@@ -269,7 +269,7 @@ namespace WorkoutGenerator.Migrations
 
                     b.Property<int>("WorkoutID");
 
-                    b.HasKey("ID");
+                    b.HasKey("RecordID");
 
                     b.HasIndex("UserId");
 
@@ -280,7 +280,7 @@ namespace WorkoutGenerator.Migrations
 
             modelBuilder.Entity("WorkoutGenerator.Models.Workout", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("WorkoutID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DateCreated");
@@ -291,7 +291,7 @@ namespace WorkoutGenerator.Migrations
 
                     b.Property<string>("UserId");
 
-                    b.HasKey("ID");
+                    b.HasKey("WorkoutID");
 
                     b.HasIndex("UserId");
 

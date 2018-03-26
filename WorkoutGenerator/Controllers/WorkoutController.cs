@@ -54,7 +54,7 @@ namespace WorkoutGenerator.Controllers
                 context.Workouts.Add(newWorkout);
                 context.SaveChanges();
 
-                return Redirect("/Workout/ViewWorkout/" + newWorkout.ID);
+                return Redirect("/Workout/ViewWorkout/" + newWorkout.WorkoutID);
             }
 
             return View(addWorkoutViewModel);
@@ -70,7 +70,7 @@ namespace WorkoutGenerator.Controllers
                 .Where(cm => cm.WorkoutID == id && cm.Workout.OwnerId == userLoggedIn.Id)//cm.Workout.OwnerId == userLoggedIn.Id returns list of owner specific workouts
                 .ToList();
 
-            Workout workout = context.Workouts.Single(m => m.ID == id); 
+            Workout workout = context.Workouts.Single(m => m.WorkoutID == id); 
 
             ViewWorkoutViewModel viewModel = new ViewWorkoutViewModel
             {
@@ -86,7 +86,7 @@ namespace WorkoutGenerator.Controllers
             string user = User.Identity.Name;
             ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
 
-            Workout workout = context.Workouts.Single(m => m.ID == id);
+            Workout workout = context.Workouts.Single(m => m.WorkoutID == id);
             List<Exercise> exercises = context.Exercises.Where(c => c.OwnerId == userLoggedIn.Id).ToList();//OwnerId specifies user for exercise list.
 
             return View(new AddWorkoutExerciseViewModel(workout, exercises));
@@ -109,8 +109,8 @@ namespace WorkoutGenerator.Controllers
                 {
                     ExerciseWorkout workoutItem = new ExerciseWorkout
                     {
-                        Exercise = context.Exercises.Single(e => e.ID == exerciseID),
-                        Workout = context.Workouts.Single(w => w.ID == workoutID)
+                        Exercise = context.Exercises.Single(e => e.ExerciseID == exerciseID),
+                        Workout = context.Workouts.Single(w => w.WorkoutID == workoutID)
                     };
 
                     context.ExerciseWorkouts.Add(workoutItem);
