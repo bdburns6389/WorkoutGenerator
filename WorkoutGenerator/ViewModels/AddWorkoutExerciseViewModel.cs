@@ -11,7 +11,7 @@ namespace WorkoutGenerator.ViewModels
         public List<SelectListItem> Exercises { get; set; }
 
         public int WorkoutID { get; set; }
-        [Display(Name = "Exercise")]//Add to make list Not say CheeseID(Not a great look)
+        [Display(Name = "Exercise")]//Add to make list Not say ExerciseID(Not a great look)
         public int ExerciseID { get; set; }
 
 

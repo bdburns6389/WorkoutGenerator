@@ -63,19 +63,20 @@ namespace WorkoutGenerator.Controllers
                 .Include(item => item.Exercise)
                 .Where(cm => cm.WorkoutID == id && cm.Workout.OwnerId == userLoggedIn.Id)
                 .ToList();
-
-                Record newRecord = new Record
+                foreach (var exercise in exercises)
                 {
-                    Sets = addRecordViewModel.Sets,
-                    Reps = addRecordViewModel.Reps,
-                    Weight = addRecordViewModel.Weight,
-                    DateCreated = DateTime.Now,
-                    OwnerId = userLoggedIn.Id,//TODO Not Sure if creation of newRecord is correct.
-                    WorkoutID = addRecordViewModel.WorkoutID
-                };
-                context.Records.Add(newRecord);
-                context.SaveChanges();
-
+                    Record newRecord = new Record
+                    {
+                        Sets = addRecordViewModel.Sets,
+                        Reps = addRecordViewModel.Reps,
+                        Weight = addRecordViewModel.Weight,
+                        DateCreated = DateTime.Now,
+                        OwnerId = userLoggedIn.Id,//TODO Not Sure if creation of newRecord is correct.
+                        WorkoutID = addRecordViewModel.WorkoutID
+                    };
+                    context.Records.Add(newRecord);
+                    context.SaveChanges();
+                }
                 return Redirect("/Record/Index");
             }
             else
