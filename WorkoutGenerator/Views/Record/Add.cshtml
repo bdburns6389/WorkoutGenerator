@@ -22,9 +22,9 @@
             <span asp-validation-for="@Model.Weight"></span>
         </div>
         <input type="hidden" name="ExerciseID" value="@Model.ExerciseID" />
+        <input type="hidden" name="WorkoutID" value="@Model.WorkoutID" />
+        <input type="hidden" name="OwnerID" value="@Model.OwnerId" />
     }
-    <input type="hidden" name="WorkoutID" value="@Model.WorkoutID" /><!--Some of these hiddens should be outside the foreach loop-->
-    <input type="hidden" name="OwnerID" value="@Model.OwnerId" />
 
     <input type="submit" value="Add Exercise Record" />
 </form>

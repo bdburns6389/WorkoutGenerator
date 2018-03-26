@@ -64,12 +64,12 @@ namespace WorkoutGenerator.Controllers
                     Weight = addRecordViewModel.Weight,
                     DateCreated = DateTime.Now,
                     OwnerId = userLoggedIn.Id,//TODO Not Sure if creation of newRecord is correct.
-                    WorkoutID = addRecordViewModel.WorkoutID,
+                    WorkoutID = addRecordViewModel.WorkoutID
                 };
                 context.Records.Add(newRecord);
                 context.SaveChanges();
 
-                return Redirect("/Record/ViewRecord" + newRecord.ID);
+                return Redirect("/Record/Index");
             }
             else
             {
