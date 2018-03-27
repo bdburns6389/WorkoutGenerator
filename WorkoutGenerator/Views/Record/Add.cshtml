@@ -21,7 +21,7 @@
             <input class="form-control" asp-for="@Model.Weight" />
             <span asp-validation-for="@Model.Weight"></span>
         </div>
-        <input type="hidden" name="ExerciseID" value="@Model.ExercisesID" />
+        <input type="hidden" name="ExerciseID" value="@exercise.ExerciseID" />
         <input type="hidden" name="WorkoutID" value="@Model.Workout.WorkoutID" />
         <input type="hidden" name="OwnerID" value="@Model.OwnerId" />
     }
