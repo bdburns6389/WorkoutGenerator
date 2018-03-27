@@ -1,35 +1,39 @@
 ﻿@model List<WorkoutGenerator.Models.Exercise>
 
-<h1>@ViewBag.Title</h1>
 
-<table class="table">
+<div class="container">
+    <!--TODO put this in every view so data will be centered.-->
+    <h1>@ViewBag.Title</h1>
 
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Muscle Group</th>
-        <th>OwnerId</th>
-        <th>Date Created</th>
+    <table class="table">
 
-    </tr>
-
-    @foreach (var exercise in Model)
-    {
         <tr>
-            <td>@exercise.Name</td>
-            <td>@exercise.Description</td>
-            <td>@exercise.MuscleGroup.Name</td>
-            <td>@exercise.OwnerId</td>
-            <td>@exercise.DateCreated</td>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Muscle Group</th>
+            <th>OwnerId</th>
+            <th>Date Created</th>
 
         </tr>
+
+        @foreach (var exercise in Model)
+        {
+            <tr>
+                <td>@exercise.Name</td>
+                <td>@exercise.Description</td>
+                <td>@exercise.MuscleGroup.Name</td>
+                <td>@exercise.OwnerId</td>
+                <td>@exercise.DateCreated</td>
+
+            </tr>
+        }
+    </table>
+
+    @if (Model.Count == 0)
+    {
+        <p>No exercises yet!</p>
     }
-</table>
 
-@if (Model.Count == 0)
-{
-    <p>No exercises yet!</p>
-}
-
-<span><a asp-controller="Exercise" asp-action="Add">Add</a></span><span> |</span>
-<span><a asp-controller="Exercise" asp-action="Remove">Remove</a></span>
+    <span><a asp-controller="Exercise" asp-action="Add">Add</a></span><span> |</span>
+    <span><a asp-controller="Exercise" asp-action="Remove">Remove</a></span>
+</div>

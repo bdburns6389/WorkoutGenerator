@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - WorkoutGenerator</title>
-
+    <!--  DO I NEED THIS????
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -14,41 +14,211 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
-</head>
-<body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">WorkoutGenerator</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Exercise" asp-action="Index">Exercises</a></li>
-                    <li><a asp-area="" asp-controller="Workout" asp-action="Index">Workouts</a></li>
-                    <li><a asp-area="" asp-controller="Exercise" asp-action="Add">Add Exercises</a></li>
-                    <li><a asp-area="" asp-controller="MuscleGroup" asp-action="Add">Add MuscleGroup</a></li>
-                    <li><a asp-area="" asp-controller="Record" asp-action="Index">Records</a></li>
-                    <li><a asp-area="" asp-controller="Record" asp-action="Add">Add Record</a></li>
-                </ul>
-                @await Html.PartialAsync("_LoginPartial")
-            </div>
-        </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - WorkoutGenerator</p>
-        </footer>
-    </div>
+    </environment>-->
+    <!--
+    Stylesheets
+    =============================================
 
+    -->
+    <!-- Default stylesheets-->
+    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Template specific stylesheets-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Volkhov:400i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link href="/lib/animate.css/animate.css" rel="stylesheet">
+    <link href="/lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/lib/et-line-font/et-line-font.css" rel="stylesheet">
+    <link href="/lib/flexslider/flexslider.css" rel="stylesheet">
+    <link href="/lib/owl.carousel/dist/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
+    <link href="/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
+    <link href="/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
+    <!-- Main stylesheet and color file-->
+    <link href="/css/style.css" rel="stylesheet">
+    <link id="color-scheme" href="~/css/colors/default.css" rel="stylesheet">
+</head>
+<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+    <main>
+        <!--
+          <nav class="navbar navbar-inverse navbar-fixed-top">
+              <div class="container">
+                  <div class="navbar-header">
+                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                          <span class="sr-only">Toggle navigation</span>
+                          <span class="icon-bar"></span>
+                          <span class="icon-bar"></span>
+                          <span class="icon-bar"></span>
+                      </button>
+                      <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">WorkoutGenerator</a>
+                  </div>
+                  <div class="navbar-collapse collapse">
+                      <ul class="nav navbar-nav">
+                          <li><a asp-area="" asp-controller="Exercise" asp-action="Index">Exercises</a></li>
+                          <li><a asp-area="" asp-controller="Workout" asp-action="Index">Workouts</a></li>
+                          <li><a asp-area="" asp-controller="Exercise" asp-action="Add">Add Exercises</a></li>
+                          <li><a asp-area="" asp-controller="MuscleGroup" asp-action="Add">Add MuscleGroup</a></li>
+                      </ul>
+                   @* @await Html.PartialAsync("_LoginPartial")*@
+                  </div>
+              </div>
+          </nav>
+            -->
+        <!--  <div class="page-loader">
+              <div class="loader">Loading...</div>
+          </div>-->
+        <!--WHAT DOES AWAIT HTML.PARTIALASYNC DO????????????-->
+        <nav class="navbar navbar-custom navbar-fixed-top navbar-transparent" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="index.html">Workout Tracker</a>
+                </div>
+                <div class="collapse navbar-collapse" id="custom-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Exercises</a><!--First Drop Down Menu-->
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="Exercise" asp-action="Add">Add</a></li>
+                                <li><a asp-area="" asp-controller="Exercise" asp-action="Remove">Remove</a></li>
+                                <li><a asp-area="" asp-controller="Exercise" asp-action="Index">View</a></li>
+                            </ul>
+                        </li>
+                        <!--MuscleGroup-->
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Muscle Groups</a><!--Second Drop Down Menu-->
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="MuscleGroup" asp-action="Add">Add</a></li>
+                                <li><a asp-area="" asp-controller="MuscleGroup" asp-action="Remove">Remove</a></li>
+                                <li><a asp-area="" asp-controller="MuscleGroup" asp-action="Index">View</a></li>
+                            </ul>
+                        </li>
+                        <!--Workout-->
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Workout</a><!-- Third Drop Down Menu-->
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="Workout" asp-action="Add">Add</a></li>
+                                <li><a asp-area="" asp-controller="Workout" asp-action="Remove">Remove</a></li>
+                                <li><a asp-area="" asp-controller="Workout" asp-action="Index">View</a></li>
+                            </ul>
+                        </li>
+                        <!--Exercise Records-->
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Exercises Records</a><!--One Drop Down Menu-->
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="ExerciseRecords" asp-action="Add">Add</a></li>
+                                <li><a asp-area="" asp-controller="ExerciseRecords" asp-action="Remove">Remove</a></li>
+                                <li><a asp-area="" asp-controller="ExerciseRecords" asp-action="Index">View</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <section class="home-section home-parallax home-fade home-full-height bg-dark-60 agency-page-header" id="home" data-background="/images/john-price.jpg">
+            <div class="titan-caption">
+                <div class="caption-content">
+                    <div class="font-alt mb-30 titan-title-size-1">Build your best you.</div>
+                    <div class="font-alt mb-40 titan-title-size-3">
+                        Fitness is about <span class="rotate">consistency | determination | persistance</span>
+                    </div><a class="section-scroll btn btn-border-w btn-circle" href="#about">Learn More</a><!--Use asp links to send to contact page -->
+                </div>
+            </div>
+        </section>
+
+
+
+        <!--<div class="container body-content">-->
+        <div class="main body-content">
+            <section class="module pt-3 pb-3" id="about">
+                @*Neccessary to not have RenderBody disappear under background picture*@
+            @RenderBody()
+        </section>
+        </div>
+
+
+
+        <div>
+        <hr class="divider-w">
+        <section class="module bg-dark-60 pt-0 pb-0 parallax-bg testimonial" data-background="/images/johannes-waibel.jpg">
+            <div class="testimonials-slider pt-140 pb-140">
+                <ul class="slides">
+                    <li>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="module-icon"><span class="icon-quote"></span></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8 col-sm-offset-2">
+                                    <blockquote class="testimonial-text font-alt">Exercise is King. Nutrition is Queen. Put Them together and you've got a Kingdom</blockquote>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 col-sm-offset-4">
+                                    <div class="testimonial-author">
+                                        <div class="testimonial-caption font-alt">
+                                            <div class="testimonial-title">Jack LaLanne</div>
+                                            <div class="testimonial-descr">"Godfather of Fitness"</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="module-icon"><span class="icon-quote"></span></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8 col-sm-offset-2">
+                                    <blockquote class="testimonial-text font-alt">I fear not the man who has practiced 10,000 kicks once, but I fear the man who has practiced one kick 10,000 times</blockquote>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 col-sm-offset-4">
+                                    <div class="testimonial-author">
+                                        <div class="testimonial-caption font-alt">
+                                            <div class="testimonial-title">Bruce Lee</div>
+                                            <div class="testimonial-descr">Inventor of Jeet Kune DO</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="module-icon"><span class="icon-quote"></span></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8 col-sm-offset-2">
+                                    <blockquote class="testimonial-text font-alt">Success isn't always about greatness. It's about consistency. Consistent, hard work gains success. Greatness will come</blockquote>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 col-sm-offset-4">
+                                    <div class="testimonial-author">
+                                        <div class="testimonial-caption font-alt">
+                                            <div class="testimonial-title">Dwayne Johnson</div>
+                                            <div class="testimonial-descr">"The Rock"</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <!--  DO I NEED THIS??????????
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
@@ -69,7 +239,26 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-
+    <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-doubleup"></i></a></div>
+        -->
     @RenderSection("Scripts", required: false)
+</main>
+<!--
+JavaScripts
+=============================================
+-->
+<script src="/lib/jquery/dist/jquery.js"></script>
+<script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/lib/wow/dist/wow.js"></script>
+<script src="/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
+<script src="/lib/isotope/dist/isotope.pkgd.js"></script>
+<script src="/lib/imagesloaded/imagesloaded.pkgd.js"></script>
+<script src="/lib/flexslider/jquery.flexslider.js"></script>
+<script src="/lib/owl.carousel/dist/owl.carousel.min.js"></script>
+<script src="/lib/smoothscroll.js"></script>
+<script src="/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
+<script src="/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/main.js"></script>
 </body>
 </html>
