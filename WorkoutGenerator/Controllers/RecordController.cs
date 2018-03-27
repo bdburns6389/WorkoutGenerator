@@ -72,7 +72,8 @@ namespace WorkoutGenerator.Controllers
                         Weight = addRecordViewModel.Weight,
                         DateCreated = DateTime.Now,//TODO Make this show only day not time of day
                         OwnerId = userLoggedIn.Id,//TODO Not Sure if creation of newRecord is correct.
-                        WorkoutID = addRecordViewModel.WorkoutID
+                        WorkoutID = addRecordViewModel.WorkoutID,
+                        FK_ExerciseID = addRecordViewModel.ExerciseID//TODO ExerciseID not entering into table.
                     };
                     context.Records.Add(newRecord);
                     context.SaveChanges();

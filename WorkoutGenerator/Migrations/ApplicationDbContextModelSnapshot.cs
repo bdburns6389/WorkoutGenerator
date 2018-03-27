@@ -256,6 +256,10 @@ namespace WorkoutGenerator.Migrations
 
                     b.Property<DateTime>("DateCreated");
 
+                    b.Property<int?>("ExerciseID");
+
+                    b.Property<int>("FK_ExerciseID");
+
                     b.Property<string>("OwnerId");
 
                     b.Property<string>("Reps");
@@ -269,6 +273,8 @@ namespace WorkoutGenerator.Migrations
                     b.Property<int>("WorkoutID");
 
                     b.HasKey("RecordID");
+
+                    b.HasIndex("ExerciseID");
 
                     b.HasIndex("UserId");
 
@@ -389,6 +395,10 @@ namespace WorkoutGenerator.Migrations
 
             modelBuilder.Entity("WorkoutGenerator.Models.Record", b =>
                 {
+                    b.HasOne("WorkoutGenerator.Models.Exercise", "Exercise")
+                        .WithMany()
+                        .HasForeignKey("ExerciseID");
+
                     b.HasOne("WorkoutGenerator.Models.ApplicationUser", "User")
                         .WithMany("Records")
                         .HasForeignKey("UserId");

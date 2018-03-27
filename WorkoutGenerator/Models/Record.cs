@@ -24,6 +24,11 @@ namespace WorkoutGenerator.Models
         [ForeignKey("WorkoutID")]
         public virtual Workout Workout { get; set; }
 
+        //ForeignKey for Exercise
+        public int FK_ExerciseID { get; set; }
+        [ForeignKey("ExerciseID")]
+        public virtual Exercise Exercise { get; set; }
+
         public IList<ExerciseRecord> ExerciseRecords { get; set; } = new List<ExerciseRecord>();
     }
 }

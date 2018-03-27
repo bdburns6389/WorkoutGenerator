@@ -228,37 +228,6 @@ namespace WorkoutGenerator.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Records",
-                columns: table => new
-                {
-                    RecordID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DateCreated = table.Column<DateTime>(nullable: false),
-                    OwnerId = table.Column<string>(nullable: true),
-                    Reps = table.Column<string>(nullable: true),
-                    Sets = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true),
-                    Weight = table.Column<string>(nullable: true),
-                    WorkoutID = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Records", x => x.RecordID);
-                    table.ForeignKey(
-                        name: "FK_Records_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Records_Workouts_WorkoutID",
-                        column: x => x.WorkoutID,
-                        principalTable: "Workouts",
-                        principalColumn: "WorkoutID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ExerciseWorkouts",
                 columns: table => new
                 {
@@ -276,6 +245,45 @@ namespace WorkoutGenerator.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ExerciseWorkouts_Workouts_WorkoutID",
+                        column: x => x.WorkoutID,
+                        principalTable: "Workouts",
+                        principalColumn: "WorkoutID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Records",
+                columns: table => new
+                {
+                    RecordID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    ExerciseID = table.Column<int>(nullable: true),
+                    FK_ExerciseID = table.Column<int>(nullable: false),
+                    OwnerId = table.Column<string>(nullable: true),
+                    Reps = table.Column<string>(nullable: true),
+                    Sets = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
+                    Weight = table.Column<string>(nullable: true),
+                    WorkoutID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Records", x => x.RecordID);
+                    table.ForeignKey(
+                        name: "FK_Records_Exercises_ExerciseID",
+                        column: x => x.ExerciseID,
+                        principalTable: "Exercises",
+                        principalColumn: "ExerciseID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Records_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Records_Workouts_WorkoutID",
                         column: x => x.WorkoutID,
                         principalTable: "Workouts",
                         principalColumn: "WorkoutID",
@@ -369,6 +377,11 @@ namespace WorkoutGenerator.Migrations
                 name: "IX_MuscleGroups_UserId",
                 table: "MuscleGroups",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Records_ExerciseID",
+                table: "Records",
+                column: "ExerciseID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Records_UserId",
