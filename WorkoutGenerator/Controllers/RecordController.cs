@@ -70,7 +70,7 @@ namespace WorkoutGenerator.Controllers
                         Sets = addRecordViewModel.Sets,
                         Reps = addRecordViewModel.Reps,
                         Weight = addRecordViewModel.Weight,
-                        DateCreated = DateTime.Now,
+                        DateCreated = DateTime.Now,//TODO Make this show only day not time of day
                         OwnerId = userLoggedIn.Id,//TODO Not Sure if creation of newRecord is correct.
                         WorkoutID = addRecordViewModel.WorkoutID
                     };
