@@ -85,5 +85,19 @@ namespace WorkoutGenerator.Controllers
                 return View(addRecordViewModel);
             }
         }
+
+        public IActionResult RecordIndex()
+        {
+            string user = User.Identity.Name;
+            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            var filteredWorkouts = context.Workouts.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
+            List<Workout> workouts = context.Workouts.ToList();
+            return View(filteredWorkouts);
+        }
+
+        public IActionResult ViewRecords()
+        {//TODO #1  Make ViewRecords return list of all exercise records ordered by recent to old
+            return View();
+        }
     }
 }
