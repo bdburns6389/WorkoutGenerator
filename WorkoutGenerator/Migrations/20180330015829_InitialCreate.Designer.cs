@@ -11,7 +11,7 @@ using WorkoutGenerator.Data;
 namespace WorkoutGenerator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180327170912_InitialCreate")]
+    [Migration("20180330015829_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -206,19 +206,6 @@ namespace WorkoutGenerator.Migrations
                     b.ToTable("Exercises");
                 });
 
-            modelBuilder.Entity("WorkoutGenerator.Models.ExerciseRecord", b =>
-                {
-                    b.Property<int>("ExerciseID");
-
-                    b.Property<int>("RecordID");
-
-                    b.HasKey("ExerciseID", "RecordID");
-
-                    b.HasIndex("RecordID");
-
-                    b.ToTable("ExerciseRecords");
-                });
-
             modelBuilder.Entity("WorkoutGenerator.Models.ExerciseWorkout", b =>
                 {
                     b.Property<int>("ExerciseID");
@@ -361,19 +348,6 @@ namespace WorkoutGenerator.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("WorkoutGenerator.Models.ExerciseRecord", b =>
-                {
-                    b.HasOne("WorkoutGenerator.Models.Exercise", "Exercise")
-                        .WithMany("ExerciseRecords")
-                        .HasForeignKey("ExerciseID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("WorkoutGenerator.Models.Record", "Record")
-                        .WithMany("ExerciseRecords")
-                        .HasForeignKey("RecordID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("WorkoutGenerator.Models.ExerciseWorkout", b =>
                 {
                     b.HasOne("WorkoutGenerator.Models.Exercise", "Exercise")
@@ -397,7 +371,7 @@ namespace WorkoutGenerator.Migrations
             modelBuilder.Entity("WorkoutGenerator.Models.Record", b =>
                 {
                     b.HasOne("WorkoutGenerator.Models.Exercise", "Exercise")
-                        .WithMany()
+                        .WithMany("Records")
                         .HasForeignKey("ExerciseID");
 
                     b.HasOne("WorkoutGenerator.Models.ApplicationUser", "User")

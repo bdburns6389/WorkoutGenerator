@@ -1,9 +1,10 @@
-﻿@model WorkoutGenerator.ViewModels.AddRecordViewModel
+﻿@using System.Collections.Generic;
+@model WorkoutGenerator.Models.Workout
 
 <h1>Add Exercise Record</h1>
 
 <form asp-controller="Record" asp-action="Add" method="post">
-    @foreach (var exercise in Model)
+    @foreach (var exercise in Model.Records)
     {
         <h4>@exercise.Exercise.Name</h4>
         <div class="form-group">
@@ -21,7 +22,7 @@
             <input class="form-control" asp-for="@exercise.Weight" />
             <span asp-validation-for="@exercise.Weight"></span>
         </div>
-        <input type="hidden" name="ExerciseID" value="@exercise.ExerciseID" />
+        <input type="hidden" name="ExerciseID" value="@exercise.Exercise.ExerciseID" />
         <input type="hidden" name="WorkoutID" value="@exercise.WorkoutID" />
         <input type="hidden" name="OwnerID" value="@exercise.Exercise.OwnerId" />
     }

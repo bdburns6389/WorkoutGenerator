@@ -290,30 +290,6 @@ namespace WorkoutGenerator.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "ExerciseRecords",
-                columns: table => new
-                {
-                    ExerciseID = table.Column<int>(nullable: false),
-                    RecordID = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExerciseRecords", x => new { x.ExerciseID, x.RecordID });
-                    table.ForeignKey(
-                        name: "FK_ExerciseRecords_Exercises_ExerciseID",
-                        column: x => x.ExerciseID,
-                        principalTable: "Exercises",
-                        principalColumn: "ExerciseID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ExerciseRecords_Records_RecordID",
-                        column: x => x.RecordID,
-                        principalTable: "Records",
-                        principalColumn: "RecordID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -352,11 +328,6 @@ namespace WorkoutGenerator.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ExerciseRecords_RecordID",
-                table: "ExerciseRecords",
-                column: "RecordID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Exercises_MuscleGroupID",
@@ -417,16 +388,13 @@ namespace WorkoutGenerator.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ExerciseRecords");
-
-            migrationBuilder.DropTable(
                 name: "ExerciseWorkouts");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Records");
 
             migrationBuilder.DropTable(
-                name: "Records");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Exercises");
