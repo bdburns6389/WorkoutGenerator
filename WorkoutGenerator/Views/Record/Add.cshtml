@@ -3,7 +3,7 @@
 <h1>Add Exercise Record</h1>
 
 <form asp-controller="Record" asp-action="Add" method="post">
-    @foreach (var exercise in Model.Exercises)
+    @foreach (var exercise in Model)
     {
         <h4>@exercise.Exercise.Name</h4>
         <div class="form-group">
