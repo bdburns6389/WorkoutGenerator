@@ -95,9 +95,32 @@ namespace WorkoutGenerator.Controllers
             return View(filteredWorkouts);
         }
 
-        public IActionResult ViewRecords()
+        public IActionResult ViewRecords(int id)
         {//TODO #1  Make ViewRecords return list of all exercise records ordered by recent to old
-            return View();
+            string user = User.Identity.Name;
+            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            List<ExerciseWorkout> exercises = context
+                .ExerciseWorkouts
+                .Include(item => item.Exercise)
+                .Where(cm => cm.WorkoutID == id && cm.Workout.OwnerId == userLoggedIn.Id)//cm.Workout.OwnerId == userLoggedIn.Id returns list of owner specific workouts
+                .ToList();
+
+            Workout workout = context.Workouts.Single(m => m.WorkoutID == id); //Only needed for title in page and to link to add an exercise
+
+            List<Record> records = context
+                .Records
+                .Include(item => item.Reps)
+                .Where(c => c.WorkoutID == id)
+                .ToList();
+
+            ViewRecordViewModel viewModel = new ViewRecordViewModel
+            {
+                Workout = workout,
+                Exercises = exercises,
+                Records = records
+            };
+
+            return View(viewModel);
         }
     }
 }

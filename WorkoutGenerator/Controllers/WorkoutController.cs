@@ -70,7 +70,7 @@ namespace WorkoutGenerator.Controllers
                 .Where(cm => cm.WorkoutID == id && cm.Workout.OwnerId == userLoggedIn.Id)//cm.Workout.OwnerId == userLoggedIn.Id returns list of owner specific workouts
                 .ToList();
 
-            Workout workout = context.Workouts.Single(m => m.WorkoutID == id); 
+            Workout workout = context.Workouts.Single(m => m.WorkoutID == id); //Only needed for title in page and to link to add an exercise
 
             ViewWorkoutViewModel viewModel = new ViewWorkoutViewModel
             {
