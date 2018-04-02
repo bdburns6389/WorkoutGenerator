@@ -3,9 +3,7 @@
 <h1>Add Exercise Record</h1>
 
 <form asp-controller="Record" asp-action="Add" method="post">
-    @foreach (var exercise in Model.Exercises)
-    {
-        <h4>@exercise.Exercise.Name</h4>
+        <h4>@Model.Exercise.Name</h4>
         <div class="form-group">
             <label asp-for="@Model.Sets"></label>
             <input class="form-control" asp-for="@Model.Sets" />
@@ -21,10 +19,9 @@
             <input class="form-control" asp-for="@Model.Weight" />
             <span asp-validation-for="@Model.Weight"></span>
         </div>
-        <input type="hidden" name="ExerciseID" value="@exercise.ExerciseID" />
-        <input type="hidden" name="WorkoutID" value="@exercise.WorkoutID" />
-        <input type="hidden" name="OwnerID" value="@exercise.Exercise.OwnerId" />
-    }
+        <input type="hidden" name="ExerciseID" value="@Model.Exercise.ExerciseID" />
+        <input type="hidden" name="WorkoutID" value="@Model.Workout.WorkoutID" />
+        <input type="hidden" name="OwnerID" value="@Model.Exercise.OwnerId" />
 
     <input type="submit" value="Add Exercise Record" />
 </form>

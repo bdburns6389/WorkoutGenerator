@@ -28,7 +28,7 @@ namespace WorkoutGenerator.Controllers
            string user = User.Identity.Name;
            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
 
-           List<Exercise> exercises = context.Exercises.Include(c => c.MuscleGroup).ToList();
+           //List<Exercise> exercises = context.Exercises.Include(c => c.MuscleGroup).ToList();
 
            var filteredExercises = context.Exercises.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
            //var filteredExercises = context.Exercises.Where(c => c.OwnerId == userLoggedIn.Id).OrderBy(c => c.Name).ToList();//This will order results by name of exercise.
