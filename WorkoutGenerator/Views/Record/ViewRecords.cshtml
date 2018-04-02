@@ -1,35 +1,15 @@
-﻿@model WorkoutGenerator.ViewModels.ViewRecordViewModel
-
-<!--TODO NEEDS WORK-->
-
-<table class="table">
-    <tr>
-        <th>Exercise</th>
-        <th>Sets</th>
-        <th>Reps</th>
-        <th>Weight</th>
-        <th>WorkoutID</th>
-        <th>ExerciseID</th>
-        <th>DateCreated</th>
-    </tr>
-
-    @foreach (var record in Model.Records)
-    {
-        <tr>
-            <td>@record.Exercise</td>
-            <td>@record.Sets</td>
-            <td>@record.Reps</td>
-            <td>@record.Weight</td>
-            <td>@record.WorkoutID</td>
-            <td>@record.FK_ExerciseID</td>
-            <td>@record.DateCreated</td>
-        </tr>
-    }
-</table>
-
-@if (Model.Records.Count == 0)
-{
-    <p>No Records Yet!</p>
+﻿
+@{
+    Layout = null;
 }
 
+<!DOCTYPE html>
 
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ViewRecords</title>
+</head>
+<body>
+</body>
+</html>
