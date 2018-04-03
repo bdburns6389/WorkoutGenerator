@@ -1,0 +1,14 @@
+﻿@model WorkoutGenerator.ViewModels.ViewExerciseListViewModel
+
+<h2>@Model.Workout.Name</h2>
+<ul>
+@foreach (var exercise in Model.ExerciseWorkouts)
+{
+    <li>
+        <a asp-controller="Record"
+           asp-action="AddRecord"
+           asp-route-ExerciseID="@exercise.ExerciseID"
+           asp-route-WorkoutID="@exercise.WorkoutID">@exercise.Exercise.Name</a>
+    </li>
+}
+</ul>

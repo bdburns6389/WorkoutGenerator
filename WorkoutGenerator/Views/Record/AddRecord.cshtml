@@ -1,0 +1,28 @@
+﻿@model WorkoutGenerator.ViewModels.AddRecordViewModel
+
+<h1>Add Exercise Record</h1>
+
+<form asp-controller="Record" asp-action="AddRecord" asp-route-ExerciseID="@Model.Exercise.ExerciseID"
+      asp-route-WorkoutID="@Model.Workout.WorkoutID"  method="post">
+    <h4>@Model.Exercise.Name</h4>
+    <div class="form-group">
+        <label asp-for="@Model.Sets"></label>
+        <input class="form-control" asp-for="@Model.Sets" />
+        <span asp-validation-for="@Model.Sets"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Reps"></label>
+        <input class="form-control" asp-for="@Model.Reps" />
+        <span asp-validation-for="@Model.Reps"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Weight"></label>
+        <input class="form-control" asp-for="@Model.Weight" />
+        <span asp-validation-for="@Model.Weight"></span>
+    </div>
+    <input type="hidden" name="ExerciseID" value="@Model.Exercise.ExerciseID" />
+    <input type="hidden" name="WorkoutID" value="@Model.Workout.WorkoutID" />
+    <input type="hidden" name="OwnerID" value="@Model.Exercise.OwnerId" />
+
+    <input type="submit" value="Add Exercise Record" />
+</form>

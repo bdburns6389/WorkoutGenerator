@@ -16,17 +16,11 @@ namespace WorkoutGenerator.ViewModels
         [Required(ErrorMessage = "Please enter amount of weight")]
         public string Weight { get; set; }
 
-        //Date Created
-        public DateTime DateCreated { get; set; }
-        //Link to user
-        public string OwnerId { get; set; }
-        //Link to Exercise
-        public int ExerciseID { get; set; }
-        //Link to Workout
-        public int WorkoutID { get; set; }
-
         public IList<ExerciseWorkout> Exercises { get; set; }
+
         public Workout Workout { get; set; }
+
+        public Exercise Exercise { get; set; }
 
         public AddRecordViewModel() { }
     }
