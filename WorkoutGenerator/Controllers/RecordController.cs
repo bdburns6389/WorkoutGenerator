@@ -104,7 +104,6 @@ namespace WorkoutGenerator.Controllers
                     context.SaveChanges();
                 //}
                 return Redirect("/Record/ExerciseList/" + WorkoutID); 
-                //TODO Should be workout ID ^^^
             }
             else
             {
@@ -112,13 +111,18 @@ namespace WorkoutGenerator.Controllers
             }
         }
 
-        public IActionResult RecordIndex()
+        public IActionResult RecordIndexWorkout()
         {
             string user = User.Identity.Name;
             ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
             var filteredWorkouts = context.Workouts.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
             List<Workout> workouts = context.Workouts.ToList();
             return View(filteredWorkouts);
+        }
+
+        public IActionResult RecordIndexExercise()
+        {
+            return View();
         }
 
         public IActionResult ViewRecords(int id)
