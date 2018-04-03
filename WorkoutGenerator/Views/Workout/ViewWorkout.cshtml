@@ -1,24 +1,24 @@
 ﻿@model WorkoutGenerator.ViewModels.ViewWorkoutViewModel
+<div class="container">
+    @{ ViewBag.Title = Model.Workout.Name;
 
-@{ ViewBag.Title = Model.Workout.Name;
-
-}
-
-<h3>@Model.Workout.Name</h3>
-
-<ul>
-    @foreach (var exerciseWorkout in Model.Exercises)
-    {
-        <li>@exerciseWorkout.Exercise.Name</li>
     }
-</ul>
 
-@if (Model.Exercises.Count == 0)
-{
-    <p><i>No Workout Exercises</i></p>
-}
+    <h3>@Model.Workout.Name</h3>
 
-<p><a asp-controller="Workout" asp-action="AddExercise" asp-route-id="@Model.Workout.WorkoutID">Add Exercise</a></p>
+    <ul>
+        @foreach (var exerciseWorkout in Model.Exercises)
+        {
+            <li>@exerciseWorkout.Exercise.Name</li>
+        }
+    </ul>
 
+    @if (Model.Exercises.Count == 0)
+    {
+        <p><i>No Workout Exercises</i></p>
+    }
+
+    <p><a asp-controller="Workout" asp-action="AddExercise" asp-route-id="@Model.Workout.WorkoutID">Add Exercise</a></p>
+</div>
 
 <!--TODO Add ownerId to workouts,have to make relationship to ApplicationUser first. -->

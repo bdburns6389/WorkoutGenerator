@@ -1,13 +1,15 @@
-﻿<h1>@ViewBag.title</h1>
+﻿<div class="container">
+    <h1>@ViewBag.title</h1>
 
-<form method="post">
+    <form method="post">
 
-    @foreach (var exercise in ViewBag.exercises)
-    {
-        <input type="checkbox" name="exerciseIds" id="@exercise.ExerciseID" value="@exercise.ExerciseID" />
-        <label for="@exercise.ExerciseID">@exercise.Name</label>
-        <br />
-    }
+        @foreach (var exercise in ViewBag.exercises)
+        {
+            <input type="checkbox" name="exerciseIds" id="@exercise.ExerciseID" value="@exercise.ExerciseID" />
+            <label for="@exercise.ExerciseID">@exercise.Name</label>
+            <br />
+        }
 
-    <input type="submit" value="Remove Selected Exercise(s)" />
-</form>
+        <input type="submit" value="Remove Selected Exercise(s)" />
+    </form>
+</div>

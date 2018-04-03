@@ -1,20 +1,21 @@
 ﻿@model WorkoutGenerator.ViewModels.AddWorkoutExerciseViewModel
+<div class="container">
+    @{
+        ViewBag.Title = "Add Item to Workout: " + Model.Workout.Name;
+    }
 
-@{
-    ViewBag.Title = "Add Item to Workout: " + Model.Workout.Name;
-}
 
 
+    <form asp-controller="Workout" asp-action="AddExercise" method="post">
 
-<form asp-controller="Workout" asp-action="AddExercise" method="post">
+        <div class="form-group">
+            <label asp-for="ExerciseID"></label>
+            <select asp-for="ExerciseID" asp-items="Model.Exercises"></select>
+            <span asp-validation-for="ExerciseID"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="ExerciseID"></label>
-        <select asp-for="ExerciseID" asp-items="Model.Exercises"></select>
-        <span asp-validation-for="ExerciseID"></span>
-    </div>
+        <input type="hidden" name="WorkoutID" value="@Model.Workout.WorkoutID" />
+        <input type="submit" value="Add Exercise" />
 
-    <input type="hidden" name="WorkoutID" value="@Model.Workout.WorkoutID" />
-    <input type="submit" value="Add Exercise" />
-
-</form>
+    </form>
+</div>

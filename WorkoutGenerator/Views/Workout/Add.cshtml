@@ -2,16 +2,16 @@
 
 @{ ViewBag.Title = "New Workout";
 }
-
-<h1>Add Workout</h1>
-<form asp-controller="Workout" asp-action="Add" method="post">
-    <div>
-        <label asp-for="Name"></label>
-        <input asp-for="Name" />
-        <span asp-validation-for="Name"></span>
-    </div>
-    <input type="hidden" name="OwnerId" value="@Model.OwnerId" />
-    <input type="submit" value="Add Workout" />
-</form>
-
+<div class="container">
+    <h1>Add Workout</h1>
+    <form asp-controller="Workout" asp-action="Add" method="post">
+        <div>
+            <label asp-for="Name"></label>
+            <input asp-for="Name" />
+            <span asp-validation-for="Name"></span>
+        </div>
+        <input type="hidden" name="OwnerId" value="@Model.OwnerId" />
+        <input type="submit" value="Add Workout" />
+    </form>
+</div>
 <!--No ViewModel exists yet, also, not sure if "Name" is correct-->

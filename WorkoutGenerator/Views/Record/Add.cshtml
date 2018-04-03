@@ -1,30 +1,31 @@
 ﻿@model WorkoutGenerator.ViewModels.AddRecordViewModel
+<div class="container">
+    <h1>Add Exercise Record</h1>
 
-<h1>Add Exercise Record</h1>
+    <form asp-controller="Record" asp-action="Add" method="post">
+        @foreach (var exercise in Model.Exercises)
+        {
+            <h4>@exercise.Exercise.Name</h4>
+            <div class="form-group">
+                <label asp-for="@Model.Sets"></label>
+                <input class="form-control" asp-for="@Model.Sets" />
+                <span asp-validation-for="@Model.Sets"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Reps"></label>
+                <input class="form-control" asp-for="@Model.Reps" />
+                <span asp-validation-for="@Model.Reps"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Weight"></label>
+                <input class="form-control" asp-for="@Model.Weight" />
+                <span asp-validation-for="@Model.Weight"></span>
+            </div>
+            <input type="hidden" name="ExerciseID" value="@exercise.ExerciseID" />
+            <input type="hidden" name="WorkoutID" value="@exercise.Workout.WorkoutID" />
+            <input type="hidden" name="OwnerID" value="@exercise.Exercise.OwnerId" />
+        }
 
-<form asp-controller="Record" asp-action="Add" method="post">
-    @foreach (var exercise in Model.Exercises)
-    {
-        <h4>@exercise.Exercise.Name</h4>
-        <div class="form-group">
-            <label asp-for="@Model.Sets"></label>
-            <input class="form-control" asp-for="@Model.Sets" />
-            <span asp-validation-for="@Model.Sets"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.Reps"></label>
-            <input class="form-control" asp-for="@Model.Reps" />
-            <span asp-validation-for="@Model.Reps"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.Weight"></label>
-            <input class="form-control" asp-for="@Model.Weight" />
-            <span asp-validation-for="@Model.Weight"></span>
-        </div>
-        <input type="hidden" name="ExerciseID" value="@exercise.ExerciseID" />
-        <input type="hidden" name="WorkoutID" value="@exercise.Workout.WorkoutID" />
-        <input type="hidden" name="OwnerID" value="@exercise.Exercise.OwnerId" />
-    }
-
-    <input type="submit" value="Add Exercise Record" />
-</form>
+        <input type="submit" value="Add Exercise Record" />
+    </form>
+</div>

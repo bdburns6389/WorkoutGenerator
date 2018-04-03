@@ -1,13 +1,14 @@
 ﻿@model WorkoutGenerator.ViewModels.AddMuscleGroupViewModel
+<div class="container">
+    <h1>Add Muscle Group</h1>
+    <form asp-controller="MuscleGroup" asp-action="Add" method="post">
+        <div>
+            <label asp-for="Name"></label>
+            <input asp-for="Name" />
+            <span asp-validation-for="Name"></span>
+        </div>
 
-<h1>Add Muscle Group</h1>
-<form asp-controller="MuscleGroup" asp-action="Add" method="post">
-    <div>
-        <label asp-for="Name"></label>
-        <input asp-for="Name" />
-        <span asp-validation-for="Name"></span>
-    </div>
-
-    <input type="hidden" name="OwnerId" value="@Model.OwnerId" />
-    <input type="submit" value="Add Muscle Group" />
-</form>
+        <input type="hidden" name="OwnerId" value="@Model.OwnerId" />
+        <input type="submit" value="Add Muscle Group" />
+    </form>
+</div>
