@@ -75,7 +75,7 @@ namespace WorkoutGenerator.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddRecord(AddRecordViewModel addRecordViewModel/*, int id*/)
+        public IActionResult AddRecord(AddRecordViewModel addRecordViewModel, int ExerciseID, int WorkoutID)
         {//Create records of exercise sets reps and weights to be added to database.
             if (ModelState.IsValid)
             {
@@ -97,13 +97,13 @@ namespace WorkoutGenerator.Controllers
                         Weight = addRecordViewModel.Weight,
                         DateCreated = DateTime.Now,//TODO Make this show only day not time of day
                         OwnerId = userLoggedIn.Id,//TODO Not Sure if creation of newRecord is correct.
-                        WorkoutID = addRecordViewModel.Workout.WorkoutID,
-                        FK_ExerciseID = addRecordViewModel.Exercise.ExerciseID//TODO ExerciseID not entering into table.
+                        WorkoutID = WorkoutID,
+                        FK_ExerciseID = ExerciseID//TODO ExerciseID not entering into table.
                     };
                     context.Records.Add(newRecord);
                     context.SaveChanges();
                 //}
-                return Redirect("/Record/ExerciseList/" + addRecordViewModel.Workout.WorkoutID); 
+                return Redirect("/Record/ExerciseList/" + WorkoutID); 
                 //TODO Should be workout ID ^^^
             }
             else
