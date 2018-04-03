@@ -48,23 +48,27 @@ namespace WorkoutGenerator.Controllers
             return View(viewModel);
         }
 
-        public IActionResult AddRecord(int id)
+        public IActionResult AddRecord(int ExerciseID, int WorkoutID)
         {//Create form for each exercise to have sets reps and weight to submit
             //!!!!!!!!!!!!!!TAKEN FROM WORKOUT CONTROLLER!!!!!!!!!  MAY NEED CHANGING!!!!!!!!!!!!!!!!
             string user = User.Identity.Name;
             ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+
             List<ExerciseWorkout> exercises = context
                 .ExerciseWorkouts
                 .Include(item => item.Exercise)
-                .Where(cm => cm.WorkoutID == id && cm.Workout.OwnerId == userLoggedIn.Id)//cm.Workout.OwnerId == userLoggedIn.Id returns list of owner specific workouts
+                .Where(cm => cm.WorkoutID == ExerciseID && cm.Workout.OwnerId == userLoggedIn.Id)//cm.Workout.OwnerId == userLoggedIn.Id returns list of owner specific workouts
                 .ToList();
 
-            Workout workout = context.Workouts.Single(m => m.WorkoutID == id);
+            Workout workout = context.Workouts.Single(m => m.WorkoutID == WorkoutID);
+
+            Exercise exercise = context.Exercises.Single(m => m.ExerciseID == ExerciseID);
 
             AddRecordViewModel viewModel = new AddRecordViewModel
             {
                 Workout = workout,
-                Exercises = exercises
+                Exercises = exercises,
+                Exercise = exercise
             };
 
             return View(viewModel);
