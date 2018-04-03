@@ -75,7 +75,7 @@ namespace WorkoutGenerator.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddRecord(AddRecordViewModel addRecordViewModel, int id)
+        public IActionResult AddRecord(AddRecordViewModel addRecordViewModel/*, int id*/)
         {//Create records of exercise sets reps and weights to be added to database.
             if (ModelState.IsValid)
             {
@@ -83,13 +83,13 @@ namespace WorkoutGenerator.Controllers
                 ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
                 //exercises hopefully returns list of exercises from 'int id' parameter,
                 //which can then be used to iterate over each exercise put into record table
-                List<ExerciseWorkout> exercises = context
-                .ExerciseWorkouts
-                .Include(item => item.Exercise)
-                .Where(cm => cm.WorkoutID == id && cm.Workout.OwnerId == userLoggedIn.Id)
-                .ToList();
-                foreach (var exercise in exercises)
-                {
+                //List<ExerciseWorkout> exercises = context
+                //.ExerciseWorkouts
+                //.Include(item => item.Exercise)
+                //.Where(cm => cm.WorkoutID == id && cm.Workout.OwnerId == userLoggedIn.Id)
+                //.ToList();
+                //foreach (var exercise in exercises)
+                //{
                     Record newRecord = new Record
                     {
                         Sets = addRecordViewModel.Sets,
@@ -102,8 +102,9 @@ namespace WorkoutGenerator.Controllers
                     };
                     context.Records.Add(newRecord);
                     context.SaveChanges();
-                }
-                return Redirect("/Record/Index");
+                //}
+                return Redirect("/Record/ExerciseList/" + addRecordViewModel.Workout.WorkoutID); 
+                //TODO Should be workout ID ^^^
             }
             else
             {
