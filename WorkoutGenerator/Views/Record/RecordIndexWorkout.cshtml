@@ -1,0 +1,16 @@
+﻿@model IEnumerable<WorkoutGenerator.Models.Workout>
+
+<h1>Exercise Records Workouts</h1>
+
+<ul>
+    @foreach (var workout in Model)
+    {
+        <li>
+            <a asp-controller="Record"
+               asp-action="RecordIndexExercise"
+               asp-route-id="@workout.WorkoutID">@workout.Name</a>
+        </li>
+    }
+</ul>
+
+<!--List all Workouts for the user-->
