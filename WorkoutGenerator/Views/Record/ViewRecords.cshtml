@@ -1,29 +1,31 @@
 ﻿@model WorkoutGenerator.ViewModels.ViewRecordViewModel
 
-<h3>@Model.Exercise.Name</h3>
+<div class="container">
+    <h3>@Model.Exercise.Name</h3>
 
-<table class="table">
-    <tr>
-        <th>Date Created</th>
-        <th>Sets</th>
-        <th>Reps</th>
-        <th>Weight</th>
-    </tr>
-
-    @foreach (var record in Model.Records)
-    {
+    <table class="table">
         <tr>
-            <td>@record.DateCreated</td>
-            <td>@record.Sets</td>
-            <td>@record.Reps</td>
-            <td>@record.Weight</td>
+            <th>Date Created</th>
+            <th>Sets</th>
+            <th>Reps</th>
+            <th>Weight</th>
         </tr>
+
+        @foreach (var record in Model.Records)
+        {
+            <tr>
+                <td>@record.DateCreated</td>
+                <td>@record.Sets</td>
+                <td>@record.Reps</td>
+                <td>@record.Weight</td>
+            </tr>
+        }
+
+
+
+    </table>
+    @if (Model.Records.Count == 0)
+    {
+        <p><i>No Records</i></p>
     }
-
-
-
-</table>
-@if (Model.Records.Count == 0)
-{
-    <p><i>No Records</i></p>
-}
+</div>
