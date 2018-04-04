@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WorkoutGenerator.Data;
 using WorkoutGenerator.Models;
 
 namespace WorkoutGenerator.ViewModels
