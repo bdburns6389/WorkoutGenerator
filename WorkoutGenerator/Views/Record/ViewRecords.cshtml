@@ -2,17 +2,28 @@
 
 <h3>@Model.Exercise.Name</h3>
 
-<ul>
+<table class="table">
+    <tr>
+        <th>Date Created</th>
+        <th>Sets</th>
+        <th>Reps</th>
+        <th>Weight</th>
+    </tr>
+
     @foreach (var record in Model.Records)
     {
-        <li>@record.Sets</li>
-        <li>@record.Reps</li>
-        <li>@record.Weight</li>
+        <tr>
+            <td>@record.DateCreated</td>
+            <td>@record.Sets</td>
+            <td>@record.Reps</td>
+            <td>@record.Weight</td>
+        </tr>
     }
-</ul>
 
+
+
+</table>
 @if (Model.Records.Count == 0)
 {
     <p><i>No Records</i></p>
 }
-<!--Organize Records to be more than just a list of all numbers-->
