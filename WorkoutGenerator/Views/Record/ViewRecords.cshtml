@@ -1,16 +1,18 @@
-﻿
-@{
-    Layout = null;
+﻿@model WorkoutGenerator.ViewModels.ViewRecordViewModel
+
+<h3>@Model.Exercise.Name</h3>
+
+<ul>
+    @foreach (var record in Model.Records)
+    {
+        <li>@record.Sets</li>
+        <li>@record.Reps</li>
+        <li>@record.Weight</li>
+    }
+</ul>
+
+@if (Model.Records.Count == 0)
+{
+    <p><i>No Records</i></p>
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>ViewRecords</title>
-</head>
-<body>
-</body>
-</html>
-<!--List records for specific exercise organized by date created-->
+<!--Organize Records to be more than just a list of all numbers-->
