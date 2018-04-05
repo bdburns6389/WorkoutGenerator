@@ -19,7 +19,6 @@ namespace WorkoutGenerator.Controllers
             context = dbContext;
         }
 
-        // GET: /<controller>/
         //[Authorize] This attribute will require login before allowing access.  Will be redirected after success.
         //[AllowAnonymous]  This attribute will allow access if global authorization is enabled.
         public IActionResult Index()
@@ -27,14 +26,8 @@ namespace WorkoutGenerator.Controllers
             //Filter exercises in View() to only show exercises by user.
            string user = User.Identity.Name;
            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
-
-           //List<Exercise> exercises = context.Exercises.Include(c => c.MuscleGroup).ToList();
-
            var filteredExercises = context.Exercises.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
-           //var filteredExercises = context.Exercises.Where(c => c.OwnerId == userLoggedIn.Id).OrderBy(c => c.Name).ToList();//This will order results by name of exercise.
-            //userLoggedIn.Id allows comparing of Id in exercise to that of the User.
            return View(filteredExercises);
-           //return View(exercises);
         }
 
         public IActionResult Add()

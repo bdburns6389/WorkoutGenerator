@@ -28,7 +28,6 @@ namespace WorkoutGenerator.Data
                 .HasKey(c => new { c.ExerciseID, c.WorkoutID });
             builder.Entity<ExerciseRecord>()
                 .HasKey(c => new { c.ExerciseID, c.RecordID });
-      
         }
     }
 }

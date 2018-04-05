@@ -52,5 +52,28 @@ namespace WorkoutGenerator.Controllers
 
             return View(addMuscleGroupViewModel);
         }
+
+        public IActionResult Remove()
+        {
+            string user = User.Identity.Name;
+            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            ViewBag.title = "Remove Muscle Groups";
+            ViewBag.musclegroups = context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Remove(int[] musclegroupIds)
+        {
+            foreach (int musclegroupId in musclegroupIds)
+            {
+                MuscleGroup theMuscleGroup = context.MuscleGroups.Single(c => c.MuscleGroupID == musclegroupId);
+                context.MuscleGroups.Remove(theMuscleGroup);
+            }
+
+            context.SaveChanges();
+
+            return Redirect("/");
+        }
     }
 }

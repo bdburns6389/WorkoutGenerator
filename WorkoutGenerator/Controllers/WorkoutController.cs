@@ -120,5 +120,28 @@ namespace WorkoutGenerator.Controllers
             } 
             return View(addWorkoutExerciseViewModel);
         }
+
+        public IActionResult Remove()
+        {
+            string user = User.Identity.Name;
+            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            ViewBag.title = "Remove Workouts";
+            ViewBag.workouts = context.Workouts.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Remove(int [] workoutIds)
+        {
+            foreach (int workoutId in workoutIds)
+            {
+                Workout theWorkout = context.Workouts.Single(c => c.WorkoutID == workoutId);
+                context.Workouts.Remove(theWorkout);
+            }
+
+            context.SaveChanges();
+
+            return Redirect("/");
+        }
     }
 }
