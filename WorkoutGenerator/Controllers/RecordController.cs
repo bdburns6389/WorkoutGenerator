@@ -169,5 +169,28 @@ namespace WorkoutGenerator.Controllers
 
             return View(viewModel);
         }
+
+        public IActionResult Remove()
+        {
+            string user = User.Identity.Name;
+            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            ViewBag.title = "Remove Records";
+            ViewBag.records = context.Records.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Remove(int[] recordIds)
+        {
+            foreach (int recordId in recordIds)
+            {
+                Record theRecord = context.Records.Single(c => c.RecordID == recordId);
+                context.Records.Remove(theRecord);
+            }
+
+            context.SaveChanges();
+
+            return Redirect("/");
+        }
     }
 }
