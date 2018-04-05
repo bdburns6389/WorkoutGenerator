@@ -50,6 +50,7 @@ namespace WorkoutGenerator.Controllers
                 // Add the new Exercise to my existing exercises
                 MuscleGroup newMuscleGroup =
                     context.MuscleGroups.Single(c => c.MuscleGroupID == addExerciseViewModel.MuscleGroupID);
+                DateTime datecreated = DateTime.Now;  //Created outside so if I use for loop in future, all iterations will be the same.
                 Exercise newExercise = new Exercise
 
                 {
@@ -57,7 +58,7 @@ namespace WorkoutGenerator.Controllers
                     Description = addExerciseViewModel.Description,
                     MuscleGroup = newMuscleGroup,
                     OwnerId = userLoggedIn.Id,
-                    DateCreated = DateTime.Now//Pay attention to this, creates time stamp for creation of entry
+                    DateCreated = datecreated//Pay attention to this, creates time stamp for creation of entry
                 };
 
                 context.Exercises.Add(newExercise);
