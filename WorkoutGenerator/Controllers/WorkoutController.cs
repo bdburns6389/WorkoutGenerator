@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WorkoutGenerator.Data;
@@ -142,6 +143,46 @@ namespace WorkoutGenerator.Controllers
             context.SaveChanges();
 
             return Redirect("/");
+        }
+
+        [AllowAnonymous]
+        public IActionResult Random()
+        {
+            string user = User.Identity.Name;
+            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            List<MuscleGroup> muscleGroups = context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
+            //List<MuscleGroup> muscles = new List<MuscleGroup>();// Currently pulls first musclegroup in table
+            List<Exercise> empty = new List<Exercise>();
+            foreach(var muscleGroup in muscleGroups)
+            {
+                Random random = new Random();
+                List<Exercise> exercises = context
+                    .Exercises
+                    .Where(c => c.MuscleGroupID == muscleGroup.MuscleGroupID)
+                    .OrderBy(x => (random.Next()))
+                    .ToList();
+                var single = exercises.FirstOrDefault();//Returns a random exercise from given MuscleGroup
+                empty.Add(single);
+            }
+            Console.Write(empty);
+            //List<Exercise> exercises = context
+            //    .Exercises
+            //    .Where(c => c.MuscleGroupID == muscleGroup.MuscleGroupID)
+            //    .OrderBy(x => (random.Next()))
+            //    .ToList();
+            //var single = exercises.FirstOrDefault();//Returns a random exercise from given MuscleGroup
+
+
+
+
+
+
+
+
+
+
+
+            return View();
         }
     }
 }
