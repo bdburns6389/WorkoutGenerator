@@ -1,0 +1,17 @@
+﻿@model WorkoutGenerator.ViewModels.AddRandomWorkoutViewModel
+
+<div class="container">
+
+    <h1>Create Random Workout</h1>
+
+    <form asp-controller="Workout" asp-action="Random" method="post">
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input class="form-control" asp-for="Name" />
+            <span asp-validation-for="Name"></span>
+        </div>
+        @*<input type="hidden" name="OwnerId" value="" />  Should this be here?*@
+        <input type="submit" value="Create New Random Workout" />
+
+    </form>
+</div>
