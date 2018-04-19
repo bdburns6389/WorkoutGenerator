@@ -145,14 +145,21 @@ namespace WorkoutGenerator.Controllers
             return Redirect("/");
         }
 
-        [AllowAnonymous]
         public IActionResult Random()
+        {
+
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult Random(AddRandomWorkoutViewModel addRandomWorkoutViewModel)
         {
             string user = User.Identity.Name;
             ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
             List<MuscleGroup> muscleGroups = context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
             //List<MuscleGroup> muscles = new List<MuscleGroup>();// Currently pulls first musclegroup in table
-            List<Exercise> empty = new List<Exercise>();
+            List<Exercise> empty = new List<Exercise>();// Will Be replaced with Workout model
             foreach(var muscleGroup in muscleGroups)
             {
                 Random random = new Random();
