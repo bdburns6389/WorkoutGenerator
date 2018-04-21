@@ -157,6 +157,21 @@ namespace WorkoutGenerator.Controllers
         {
             string user = User.Identity.Name;
             ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+
+
+            Workout newWorkout = new Workout
+            {
+                Name = addRandomWorkoutViewModel.Name,
+                DateCreated = DateTime.Now,
+                OwnerId = userLoggedIn.Id
+            };
+
+            context.Workouts.Add(newWorkout);
+            context.SaveChanges();
+
+            int id = newWorkout.WorkoutID;
+
+
             List<MuscleGroup> muscleGroups = context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
             //List<MuscleGroup> muscles = new List<MuscleGroup>();// Currently pulls first musclegroup in table
             List<Exercise> empty = new List<Exercise>();// Will Be replaced with Workout model
@@ -171,23 +186,6 @@ namespace WorkoutGenerator.Controllers
                 var single = exercises.FirstOrDefault();//Returns a random exercise from given MuscleGroup
                 empty.Add(single);
             }
-            Console.Write(empty);
-            //List<Exercise> exercises = context
-            //    .Exercises
-            //    .Where(c => c.MuscleGroupID == muscleGroup.MuscleGroupID)
-            //    .OrderBy(x => (random.Next()))
-            //    .ToList();
-            //var single = exercises.FirstOrDefault();//Returns a random exercise from given MuscleGroup
-
-
-
-
-
-
-
-
-
-
 
             return View();
         }
