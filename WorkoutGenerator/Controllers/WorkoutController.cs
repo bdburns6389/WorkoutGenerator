@@ -169,7 +169,7 @@ namespace WorkoutGenerator.Controllers
             context.Workouts.Add(newWorkout);
             context.SaveChanges();
 
-            int id = newWorkout.WorkoutID;
+            int newWorkoutid = newWorkout.WorkoutID;
 
 
             List<MuscleGroup> muscleGroups = context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
@@ -183,9 +183,21 @@ namespace WorkoutGenerator.Controllers
                     .Where(c => c.MuscleGroupID == muscleGroup.MuscleGroupID)
                     .OrderBy(x => (random.Next()))
                     .ToList();
-                var single = exercises.FirstOrDefault();//Returns a random exercise from given MuscleGroup
-                empty.Add(single);
+                var single = exercises.FirstOrDefault();
+
+                ExerciseWorkout workoutItem = new ExerciseWorkout
+                {
+                    Exercise = exercises.FirstOrDefault(),
+                    Workout = context.Workouts.Single(w => w.WorkoutID == newWorkoutid)
+                };
+
+                context.ExerciseWorkouts.Add(workoutItem);
+                
+
+                //Returns a random exercise from given MuscleGroup
+                 // TODO add single exercise to newWorkout
             }
+            context.SaveChanges();
 
             return View();
         }
