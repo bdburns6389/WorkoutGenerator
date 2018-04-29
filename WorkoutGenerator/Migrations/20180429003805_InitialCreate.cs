@@ -158,8 +158,7 @@ namespace WorkoutGenerator.Migrations
                 name: "MuscleGroups",
                 columns: table => new
                 {
-                    MuscleGroupID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    MuscleGroupID = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     OwnerId = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
@@ -179,8 +178,7 @@ namespace WorkoutGenerator.Migrations
                 name: "Workouts",
                 columns: table => new
                 {
-                    WorkoutID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    WorkoutID = table.Column<Guid>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     OwnerId = table.Column<string>(nullable: true),
@@ -201,11 +199,10 @@ namespace WorkoutGenerator.Migrations
                 name: "Exercises",
                 columns: table => new
                 {
-                    ExerciseID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ExerciseID = table.Column<Guid>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    MuscleGroupID = table.Column<int>(nullable: false),
+                    MuscleGroupID = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     OwnerId = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
@@ -231,8 +228,8 @@ namespace WorkoutGenerator.Migrations
                 name: "ExerciseWorkouts",
                 columns: table => new
                 {
-                    ExerciseID = table.Column<int>(nullable: false),
-                    WorkoutID = table.Column<int>(nullable: false)
+                    ExerciseID = table.Column<Guid>(nullable: false),
+                    WorkoutID = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -255,17 +252,16 @@ namespace WorkoutGenerator.Migrations
                 name: "Records",
                 columns: table => new
                 {
-                    RecordID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RecordID = table.Column<Guid>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
-                    ExerciseID = table.Column<int>(nullable: true),
-                    FK_ExerciseID = table.Column<int>(nullable: false),
+                    ExerciseID = table.Column<Guid>(nullable: true),
+                    FK_ExerciseID = table.Column<Guid>(nullable: false),
                     OwnerId = table.Column<string>(nullable: true),
                     Reps = table.Column<string>(nullable: true),
                     Sets = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
                     Weight = table.Column<string>(nullable: true),
-                    WorkoutID = table.Column<int>(nullable: false)
+                    WorkoutID = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -294,8 +290,8 @@ namespace WorkoutGenerator.Migrations
                 name: "ExerciseRecords",
                 columns: table => new
                 {
-                    ExerciseID = table.Column<int>(nullable: false),
-                    RecordID = table.Column<int>(nullable: false)
+                    ExerciseID = table.Column<Guid>(nullable: false),
+                    RecordID = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {

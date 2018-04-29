@@ -84,9 +84,9 @@ namespace WorkoutGenerator.Controllers
         }
 
         [HttpPost]
-        public IActionResult Remove(int[] exerciseIds)
+        public IActionResult Remove(Guid[] exerciseIds)
         {
-            foreach (int exerciseId in exerciseIds)
+            foreach (Guid exerciseId in exerciseIds)
             {
                 Exercise theExercise = context.Exercises.Single(c => c.ExerciseID == exerciseId);
                 context.Exercises.Remove(theExercise);

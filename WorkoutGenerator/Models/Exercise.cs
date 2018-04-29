@@ -9,12 +9,12 @@ namespace WorkoutGenerator.Models
     public class Exercise
     {
         [Key]
-        public int ExerciseID { get; set; }
+        public Guid ExerciseID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime DateCreated { get; set; }
 
-        public int MuscleGroupID { get; set; }
+        public Guid MuscleGroupID { get; set; }
         [ForeignKey("MuscleGroupID")]
         public virtual MuscleGroup MuscleGroup { get; set; }
 

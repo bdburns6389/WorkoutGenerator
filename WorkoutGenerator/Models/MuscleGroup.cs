@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using WorkoutGenerator.Models;
@@ -8,7 +9,7 @@ namespace WorkoutGenerator.Models
     public class MuscleGroup
     {
         [Key]
-        public int MuscleGroupID { get; set; }
+        public Guid MuscleGroupID { get; set; }
         public string Name { get; set; }
         
 

@@ -1,11 +1,13 @@
-﻿namespace WorkoutGenerator.Models
+﻿using System;
+
+namespace WorkoutGenerator.Models
 {
     public class ExerciseWorkout
     {
-        public int WorkoutID { get; set; }
+        public Guid WorkoutID { get; set; }
         public Workout Workout { get; set; }
 
-        public int ExerciseID { get; set; }
+        public Guid ExerciseID { get; set; }
         public Exercise Exercise { get; set; }
     }
 }

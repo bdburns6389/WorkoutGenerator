@@ -27,7 +27,7 @@ namespace WorkoutGenerator.Controllers
             return View(filteredWorkouts);
         }
 
-        public IActionResult ExerciseList(int id)
+        public IActionResult ExerciseList(Guid id)
         {
             string user = User.Identity.Name;
             ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
@@ -48,7 +48,7 @@ namespace WorkoutGenerator.Controllers
             return View(viewModel);
         }
 
-        public IActionResult AddRecord(int ExerciseID, int WorkoutID)
+        public IActionResult AddRecord(Guid ExerciseID, Guid WorkoutID)
         {//Create form for each exercise to have sets reps and weight to submit
             //!!!!!!!!!!!!!!TAKEN FROM WORKOUT CONTROLLER!!!!!!!!!  MAY NEED CHANGING!!!!!!!!!!!!!!!!
             string user = User.Identity.Name;
@@ -75,7 +75,7 @@ namespace WorkoutGenerator.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddRecord(AddRecordViewModel addRecordViewModel, int ExerciseID, int WorkoutID)
+        public IActionResult AddRecord(AddRecordViewModel addRecordViewModel, Guid ExerciseID, Guid WorkoutID)
         {//Create records of exercise sets reps and weights to be added to database.
             if (ModelState.IsValid)
             {
@@ -120,7 +120,7 @@ namespace WorkoutGenerator.Controllers
             return View(filteredWorkouts);
         }
 
-        public IActionResult RecordIndexExercise(int id)
+        public IActionResult RecordIndexExercise(Guid id)
         {
             string user = User.Identity.Name;
             ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
@@ -144,7 +144,7 @@ namespace WorkoutGenerator.Controllers
             return View(viewModel);
         }
 
-        public IActionResult ViewRecords(int WorkoutID, int ExerciseID)
+        public IActionResult ViewRecords(Guid WorkoutID, Guid ExerciseID)
         {
             string user = User.Identity.Name;
             ApplicationUser userLoggedIn = context
@@ -180,9 +180,9 @@ namespace WorkoutGenerator.Controllers
         }
 
         [HttpPost]
-        public IActionResult Remove(int[] recordIds)
+        public IActionResult Remove(Guid[] recordIds)
         {
-            foreach (int recordId in recordIds)
+            foreach (Guid recordId in recordIds)
             {
                 Record theRecord = context.Records.Single(c => c.RecordID == recordId);
                 context.Records.Remove(theRecord);

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using WorkoutGenerator.Models;
@@ -10,9 +11,9 @@ namespace WorkoutGenerator.ViewModels
         public Workout Workout { get; set; }
         public List<SelectListItem> Exercises { get; set; }
 
-        public int WorkoutID { get; set; }
+        public Guid WorkoutID { get; set; }
         [Display(Name = "Exercise")]//Add to make list Not say ExerciseID(Not a great look)
-        public int ExerciseID { get; set; }
+        public Guid ExerciseID { get; set; }
 
 
         public AddWorkoutExerciseViewModel() { }

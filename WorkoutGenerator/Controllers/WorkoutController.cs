@@ -61,7 +61,7 @@ namespace WorkoutGenerator.Controllers
             return View(addWorkoutViewModel);
         }
 
-        public IActionResult ViewWorkout(int id)
+        public IActionResult ViewWorkout(Guid id)
         {
             string user = User.Identity.Name;
             ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
@@ -82,7 +82,7 @@ namespace WorkoutGenerator.Controllers
             return View(viewModel);
         }
 
-        public IActionResult AddExercise(int id)
+        public IActionResult AddExercise(Guid id)
         {
             string user = User.Identity.Name;
             ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
@@ -132,9 +132,9 @@ namespace WorkoutGenerator.Controllers
         }
 
         [HttpPost]
-        public IActionResult Remove(int [] workoutIds)
+        public IActionResult Remove(Guid [] workoutIds)
         {
-            foreach (int workoutId in workoutIds)
+            foreach (Guid workoutId in workoutIds)
             {
                 Workout theWorkout = context.Workouts.Single(c => c.WorkoutID == workoutId);
                 context.Workouts.Remove(theWorkout);
@@ -169,12 +169,11 @@ namespace WorkoutGenerator.Controllers
             context.Workouts.Add(newWorkout);
             context.SaveChanges();
 
-            int newWorkoutid = newWorkout.WorkoutID;
+            Guid newWorkoutid = newWorkout.WorkoutID;
 
 
             List<MuscleGroup> muscleGroups = context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
             //List<MuscleGroup> muscles = new List<MuscleGroup>();// Currently pulls first musclegroup in table
-            List<Exercise> empty = new List<Exercise>();// Will Be replaced with Workout model
             foreach(var muscleGroup in muscleGroups)
             {
                 Random random = new Random();
@@ -192,10 +191,6 @@ namespace WorkoutGenerator.Controllers
                 };
 
                 context.ExerciseWorkouts.Add(workoutItem);
-                
-
-                //Returns a random exercise from given MuscleGroup
-                 // TODO add single exercise to newWorkout
             }
             context.SaveChanges();
 

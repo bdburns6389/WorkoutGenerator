@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WorkoutGenerator.Data;
@@ -63,9 +64,9 @@ namespace WorkoutGenerator.Controllers
         }
 
         [HttpPost]
-        public IActionResult Remove(int[] musclegroupIds)
+        public IActionResult Remove(Guid[] musclegroupIds)
         {
-            foreach (int musclegroupId in musclegroupIds)
+            foreach (Guid musclegroupId in musclegroupIds)
             {
                 MuscleGroup theMuscleGroup = context.MuscleGroups.Single(c => c.MuscleGroupID == musclegroupId);
                 context.MuscleGroups.Remove(theMuscleGroup);

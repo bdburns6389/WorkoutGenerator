@@ -181,14 +181,14 @@ namespace WorkoutGenerator.Migrations
 
             modelBuilder.Entity("WorkoutGenerator.Models.Exercise", b =>
                 {
-                    b.Property<int>("ExerciseID")
+                    b.Property<Guid>("ExerciseID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DateCreated");
 
                     b.Property<string>("Description");
 
-                    b.Property<int>("MuscleGroupID");
+                    b.Property<Guid>("MuscleGroupID");
 
                     b.Property<string>("Name");
 
@@ -207,9 +207,9 @@ namespace WorkoutGenerator.Migrations
 
             modelBuilder.Entity("WorkoutGenerator.Models.ExerciseRecord", b =>
                 {
-                    b.Property<int>("ExerciseID");
+                    b.Property<Guid>("ExerciseID");
 
-                    b.Property<int>("RecordID");
+                    b.Property<Guid>("RecordID");
 
                     b.HasKey("ExerciseID", "RecordID");
 
@@ -220,9 +220,9 @@ namespace WorkoutGenerator.Migrations
 
             modelBuilder.Entity("WorkoutGenerator.Models.ExerciseWorkout", b =>
                 {
-                    b.Property<int>("ExerciseID");
+                    b.Property<Guid>("ExerciseID");
 
-                    b.Property<int>("WorkoutID");
+                    b.Property<Guid>("WorkoutID");
 
                     b.HasKey("ExerciseID", "WorkoutID");
 
@@ -233,7 +233,7 @@ namespace WorkoutGenerator.Migrations
 
             modelBuilder.Entity("WorkoutGenerator.Models.MuscleGroup", b =>
                 {
-                    b.Property<int>("MuscleGroupID")
+                    b.Property<Guid>("MuscleGroupID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
@@ -251,14 +251,14 @@ namespace WorkoutGenerator.Migrations
 
             modelBuilder.Entity("WorkoutGenerator.Models.Record", b =>
                 {
-                    b.Property<int>("RecordID")
+                    b.Property<Guid>("RecordID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DateCreated");
 
-                    b.Property<int?>("ExerciseID");
+                    b.Property<Guid?>("ExerciseID");
 
-                    b.Property<int>("FK_ExerciseID");
+                    b.Property<Guid>("FK_ExerciseID");
 
                     b.Property<string>("OwnerId");
 
@@ -270,7 +270,7 @@ namespace WorkoutGenerator.Migrations
 
                     b.Property<string>("Weight");
 
-                    b.Property<int>("WorkoutID");
+                    b.Property<Guid>("WorkoutID");
 
                     b.HasKey("RecordID");
 
@@ -285,7 +285,7 @@ namespace WorkoutGenerator.Migrations
 
             modelBuilder.Entity("WorkoutGenerator.Models.Workout", b =>
                 {
-                    b.Property<int>("WorkoutID")
+                    b.Property<Guid>("WorkoutID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DateCreated");

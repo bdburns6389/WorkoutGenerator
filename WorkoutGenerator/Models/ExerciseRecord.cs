@@ -7,10 +7,10 @@ namespace WorkoutGenerator.Models
 {
     public class ExerciseRecord
     {
-        public int ExerciseID { get; set; }
+        public Guid ExerciseID { get; set; }
         public Exercise Exercise { get; set; }
 
-        public int RecordID { get; set; }
+        public Guid RecordID { get; set; }
         public Record Record { get; set; }
     }
 }
