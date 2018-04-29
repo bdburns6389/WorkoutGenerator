@@ -194,7 +194,7 @@ namespace WorkoutGenerator.Controllers
             }
             context.SaveChanges();
 
-            return View();
+            return Redirect("/Workout/Index");
         }
     }
 }
