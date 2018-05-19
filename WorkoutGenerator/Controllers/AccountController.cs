@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using WorkoutGenerator.Data;
 using WorkoutGenerator.Models;
 using WorkoutGenerator.Models.AccountViewModels;
 using WorkoutGenerator.Services;
@@ -20,6 +21,7 @@ namespace WorkoutGenerator.Controllers
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
+        private ApplicationDbContext context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
@@ -29,12 +31,14 @@ namespace WorkoutGenerator.Controllers
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            ApplicationDbContext dbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            context = dbContext;
         }
 
         [TempData]
@@ -233,6 +237,25 @@ namespace WorkoutGenerator.Controllers
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
+                    //TODO use userId to create new 
+                    var userId = user.Id;
+
+                    List<string> defaults = new List<string>
+                    {
+                        "Legs", "Back", "Chest", "Arms", "Abdominals"
+                    };
+
+                    foreach (string i in defaults)
+                    {
+                        MuscleGroup newMuscleGroup = new MuscleGroup
+                        {
+                            Name = i,
+                            OwnerId = user.Id
+                        };
+                        context.Add(newMuscleGroup);
+                        context.SaveChanges();
+                    }
+
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
