@@ -237,7 +237,7 @@ namespace WorkoutGenerator.Controllers
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
-                    //TODO use userId to create new 
+                    //Create default musclegroups for each user upon registering. 
                     var userId = user.Id;
 
                     List<string> defaults = new List<string>
