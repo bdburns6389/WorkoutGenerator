@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using WorkoutGenerator.Data;
+using WorkoutGenerator.DefaultHelpers;
 using WorkoutGenerator.Models;
 using WorkoutGenerator.Models.AccountViewModels;
 using WorkoutGenerator.Services;
@@ -225,7 +226,7 @@ namespace WorkoutGenerator.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -239,23 +240,10 @@ namespace WorkoutGenerator.Controllers
                     _logger.LogInformation("User created a new account with password.");
                     //Create default musclegroups for each user upon registering. 
                     var userId = user.Id;
-
-                    List<string> defaults = new List<string>
-                    {
-                        "Legs", "Back", "Chest", "Arms", "Abdominals"
-                    };
-
-                    foreach (string i in defaults)
-                    {
-                        MuscleGroup newMuscleGroup = new MuscleGroup
-                        {
-                            Name = i,
-                            OwnerId = user.Id
-                        };
-                        context.Add(newMuscleGroup);
-                        context.SaveChanges();
-                    }
-
+                   
+                    MuscleGroupDefaults.Add(userId, context);
+                    //List<MuscleGroup> muscleGroups = context.MuscleGroups.Where(c => c.OwnerId == userId).ToList();
+                   
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
