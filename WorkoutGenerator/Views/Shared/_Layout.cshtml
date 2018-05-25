@@ -79,43 +79,43 @@
                         <li class="dropdown">
                             <a class="dropdown-toggle" href="#" data-toggle="dropdown">Exercises</a><!--First Drop Down Menu-->
                             <ul class="dropdown-menu">
-                                <li><a asp-area="" asp-controller="Exercise" asp-action="Add">Add</a></li>
-                                <li><a asp-area="" asp-controller="Exercise" asp-action="Remove">Remove</a></li>
-                                <li><a asp-area="" asp-controller="Exercise" asp-action="Index">View</a></li>
+                                <li><a asp-area="" asp-controller="Exercise" asp-action="Add" asp-fragment="main-content">Add</a></li>
+                                <li><a asp-area="" asp-controller="Exercise" asp-action="Remove" asp-fragment="main-content">Remove</a></li>
+                                <li><a asp-area="" asp-controller="Exercise" asp-action="Index" asp-fragment="main-content">View</a></li>
                             </ul>
                         </li>
                         <!--MuscleGroup-->
                         <li class="dropdown">
                             <a class="dropdown-toggle" href="#" data-toggle="dropdown">Muscle Groups</a><!--Second Drop Down Menu-->
                             <ul class="dropdown-menu">
-                                <li><a asp-area="" asp-controller="MuscleGroup" asp-action="Add">Add</a></li>
-                                <li><a asp-area="" asp-controller="MuscleGroup" asp-action="Remove">Remove</a></li>
-                                <li><a asp-area="" asp-controller="MuscleGroup" asp-action="Index">View</a></li>
+                                <li><a asp-area="" asp-controller="MuscleGroup" asp-action="Add" asp-fragment="main-content">Add</a></li>
+                                <li><a asp-area="" asp-controller="MuscleGroup" asp-action="Remove" asp-fragment="main-content">Remove</a></li>
+                                <li><a asp-area="" asp-controller="MuscleGroup" asp-action="Index" asp-fragment="main-content">View</a></li>
                             </ul>
                         </li>
                         <!--Workout-->
                         <li class="dropdown">
                             <a class="dropdown-toggle" href="#" data-toggle="dropdown">Workout</a><!-- Third Drop Down Menu-->
                             <ul class="dropdown-menu">
-                                <li><a asp-area="" asp-controller="Workout" asp-action="Add">Add</a></li>
-                                <li><a asp-area="" asp-controller="Workout" asp-action="Remove">Remove</a></li>
-                                <li><a asp-area="" asp-controller="Workout" asp-action="Index">View</a></li>
+                                <li><a asp-area="" asp-controller="Workout" asp-action="Add" asp-fragment="main-content">Add</a></li>
+                                <li><a asp-area="" asp-controller="Workout" asp-action="Remove" asp-fragment="main-content">Remove</a></li>
+                                <li><a asp-area="" asp-controller="Workout" asp-action="Index" asp-fragment="main-content">View</a></li>
                             </ul>
                         </li>
                         <!--Exercise Records-->
                         <li class="dropdown">
                             <a class="dropdown-toggle" href="#" data-toggle="dropdown">Exercises Records</a><!--One Drop Down Menu-->
                             <ul class="dropdown-menu">
-                                <li><a asp-area="" asp-controller="Record" asp-action="Index">Add</a></li>
-                                <li><a asp-area="" asp-controller="Record" asp-action="Remove">Remove</a></li>
-                                <li><a asp-area="" asp-controller="Record" asp-action="RecordIndexWorkout">View</a></li>
+                                <li><a asp-area="" asp-controller="Record" asp-action="Index" asp-fragment="main-content">Add</a></li>
+                                <li><a asp-area="" asp-controller="Record" asp-action="Remove" asp-fragment="main-content">Remove</a></li>
+                                <li><a asp-area="" asp-controller="Record" asp-action="RecordIndexWorkout" asp-fragment="main-content">View</a></li>
                             </ul>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <section class="home-section home-parallax home-fade home-full-height bg-dark-60 agency-page-header" id="home" data-background="/images/john-price.jpg">
+        <section class="home-section home-parallax home-fade home-full-height bg-dark-60 agency-page-header" id="home" data-background="/images/barbell.jpg">
             <div class="titan-caption">
                 <div class="caption-content">
                     <div class="font-alt mb-30 titan-title-size-1">Build your best you.</div>
@@ -127,7 +127,7 @@
         </section>
         <!--<div class="container body-content">-->
         <div class="main body-content">
-            <section class="module pt-3 pb-3" id="about">
+            <section class="module pt-3 pb-3" id="main-content">
                 
                 @*Neccessary to not have RenderBody disappear under background picture*@
                 @RenderBody()
