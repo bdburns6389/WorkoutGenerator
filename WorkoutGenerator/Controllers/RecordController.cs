@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
+using Dapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using WorkoutGenerator.Data;
 using WorkoutGenerator.Models;
 using WorkoutGenerator.ViewModels;
@@ -11,29 +16,35 @@ namespace WorkoutGenerator.Controllers
 {
     public class RecordController : Controller
     {
-        private ApplicationDbContext context;
+        private readonly ApplicationDbContext context;
+        private readonly IConfiguration _configuration;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RecordController(ApplicationDbContext dbContext)
+        public RecordController(ApplicationDbContext dbContext, IConfiguration config, UserManager<ApplicationUser> userManger)
         {
             context = dbContext;
+            _configuration = config;
+            _userManager = userManger;
         }
 
         public IActionResult Index()
         {
-            string user = User.Identity.Name;
-            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
-            var filteredWorkouts = context.Workouts.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
-            return View(filteredWorkouts);
+            var userId = _userManager.GetUserId(User);
+            using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                const string sql = "SELECT * FROM Workouts WHERE OwnerId = @userId";
+                var filterWorkouts = db.Query<Workout>(sql, new {userId}).ToList();
+                return View(filterWorkouts);
+            }
         }
 
         public IActionResult ExerciseList(int id)
         {
-            string user = User.Identity.Name;
-            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            var userId = _userManager.GetUserId(User);
             List<ExerciseWorkout> exercises = context
                 .ExerciseWorkouts
                 .Include(item => item.Exercise)
-                .Where(cm => cm.WorkoutID == id && cm.Workout.OwnerId == userLoggedIn.Id)//cm.Workout.OwnerId == userLoggedIn.Id returns list of owner specific workouts
+                .Where(cm => cm.WorkoutID == id && cm.Workout.OwnerId == userId)//cm.Workout.OwnerId == userLoggedIn.Id returns list of owner specific workouts
                 .ToList();
 
             Workout workout = context.Workouts.Single(m => m.WorkoutID == id); //Only needed for title in page and to link to add an exercise
@@ -47,20 +58,19 @@ namespace WorkoutGenerator.Controllers
             return View(viewModel);
         }
 
-        public IActionResult AddRecord(int ExerciseID, int WorkoutID)
+        public IActionResult AddRecord(int exerciseId, int workoutId)
         {
-            string user = User.Identity.Name;
-            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            var userId = _userManager.GetUserId(User);
 
             List<ExerciseWorkout> exercises = context
                 .ExerciseWorkouts
                 .Include(item => item.Exercise)
-                .Where(cm => cm.WorkoutID == ExerciseID && cm.Workout.OwnerId == userLoggedIn.Id)//cm.Workout.OwnerId == userLoggedIn.Id returns list of owner specific workouts
+                .Where(cm => cm.WorkoutID == exerciseId && cm.Workout.OwnerId == userId)//cm.Workout.OwnerId == userLoggedIn.Id returns list of owner specific workouts
                 .ToList();
 
-            Workout workout = context.Workouts.Single(m => m.WorkoutID == WorkoutID);
+            Workout workout = context.Workouts.Single(m => m.WorkoutID == workoutId);
 
-            Exercise exercise = context.Exercises.Single(m => m.ExerciseID == ExerciseID);
+            Exercise exercise = context.Exercises.Single(m => m.ExerciseID == exerciseId);
 
             AddRecordViewModel viewModel = new AddRecordViewModel
             {
@@ -73,67 +83,58 @@ namespace WorkoutGenerator.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddRecord(AddRecordViewModel addRecordViewModel, int ExerciseID, int WorkoutID)
-        {//Create records of exercise sets reps and weights to be added to database.
-            if (ModelState.IsValid)
-            {
-                string user = User.Identity.Name;
-                ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
-                Record newRecord = new Record
-                {
-                    Sets = addRecordViewModel.Sets,
-                    Reps = addRecordViewModel.Reps,
-                    Weight = addRecordViewModel.Weight,
-                    DateCreated = DateTime.Now,
-                    OwnerId = userLoggedIn.Id,
-                    WorkoutID = WorkoutID,
-                    FK_ExerciseID = ExerciseID
-                };
-                context.Records.Add(newRecord);
-                context.SaveChanges();
+        public IActionResult AddRecord(AddRecordViewModel addRecordViewModel, int exerciseId, int workoutId)
+        {
+            if (!ModelState.IsValid) return View(addRecordViewModel);
 
-                return Redirect("/Record/ExerciseList/" + WorkoutID);
-            }
-            else
+            var userId = _userManager.GetUserId(User);
+            using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                return View(addRecordViewModel);
+                var sql =
+                    "INSERT INTO Records (Sets, Reps, Weight, DateCreated, OwnerId, WorkoutID, FK_ExerciseID)" +
+                    " VALUES(@sets, @reps, @weight, @dateCreated, @ownerId, @workoutId, @FK_ExerciseID);";
+
+                db.Execute(sql, new
+                {
+                    sets = addRecordViewModel.Sets,
+                    reps = addRecordViewModel.Reps,
+                    weight = addRecordViewModel.Weight,
+                    dateCreated = DateTime.Now,
+                    ownerId = userId,
+                    workoutId,
+                    FK_ExerciseID = exerciseId
+                });
             }
+
+             return Redirect("/Record/ExerciseList/" + workoutId);
         }
 
         public IActionResult RecordIndexWorkout()
         {
-            string user = User.Identity.Name;
-            ApplicationUser userLoggedIn = context
-                .Users
-                .Single(c => c.UserName == user);
-
-            List<Workout> workouts = context
-                .Workouts
-                .ToList();
+            var userId = _userManager.GetUserId(User);
 
             var filteredWorkouts = context
                 .Workouts
-                .Where(c => c.OwnerId == userLoggedIn.Id).ToList();
+                .Where(c => c.OwnerId == userId).ToList();
 
             return View(filteredWorkouts);
         }
 
         public IActionResult RecordIndexExercise(int id)
         {
-            string user = User.Identity.Name;
-            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            var userId = _userManager.GetUserId(User);
 
-            List<ExerciseWorkout> exercises = context
+            var exercises = context
                 .ExerciseWorkouts
                 .Include(item => item.Exercise)
-                .Where(cm => cm.WorkoutID == id && cm.Workout.OwnerId == userLoggedIn.Id)//cm.Workout.OwnerId == userLoggedIn.Id returns list of owner specific workouts
+                .Where(cm => cm.WorkoutID == id && cm.Workout.OwnerId == userId)//cm.Workout.OwnerId == userLoggedIn.Id returns list of owner specific workouts
                 .ToList();
 
-            Workout workout = context
+            var workout = context
                 .Workouts
                 .Single(m => m.WorkoutID == id); //Only needed for title in page and to link to add an exercise
 
-            ViewRecordViewModel viewModel = new ViewRecordViewModel
+            var viewModel = new ViewRecordViewModel
             {
                 Workout = workout,
                 ExerciseWorkouts = exercises
@@ -170,25 +171,25 @@ namespace WorkoutGenerator.Controllers
 
         public IActionResult Remove()
         {
-            string user = User.Identity.Name;
-            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            var userId = _userManager.GetUserId(User);
             ViewBag.title = "Remove Records";
-            ViewBag.records = context.Records.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
+            ViewBag.records = context.Records.Where(c => c.OwnerId == userId).ToList();
             return View();
         }
 
         [HttpPost]
         public IActionResult Remove(int[] recordIds)
         {
-            foreach (int recordId in recordIds)
+            using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                Record theRecord = context.Records.Single(c => c.RecordID == recordId);
-                context.Records.Remove(theRecord);
+                foreach (int recordId in recordIds)
+                {
+                    const string sql = "DELETE FROM Records WHERE RecordID = @recordId";
+                    db.Execute(sql, new { recordId });
+                }
+
+                return Redirect("/");
             }
-
-            context.SaveChanges();
-
-            return Redirect("/");
         }
     }
 }

@@ -21,6 +21,8 @@ namespace WorkoutGenerator.ViewModels
         public Workout Workout { get; set; }
 
         public Exercise Exercise { get; set; }
+
+        public AddRecordViewModel() { }
     }
 }
 

@@ -5,7 +5,9 @@ namespace WorkoutGenerator.ViewModels
 {
     public class ViewWorkoutViewModel
     {
-        public IList<ExerciseWorkout> Exercises { get; set; }
+        public IList<Exercise> Exercises { get; set; }
         public Workout Workout { get; set; }
+
+        public ViewWorkoutViewModel() { }
     }
 }

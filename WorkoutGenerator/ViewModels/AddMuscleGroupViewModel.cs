@@ -9,5 +9,7 @@ namespace WorkoutGenerator.ViewModels
         public string Name { get; set; }
         public string OwnerId { get; set; }
 
+        public AddMuscleGroupViewModel() { }
+
     }
 }

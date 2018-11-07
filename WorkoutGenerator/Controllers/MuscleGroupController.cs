@@ -8,28 +8,28 @@ using WorkoutGenerator.Data;
 using WorkoutGenerator.Models;
 using WorkoutGenerator.ViewModels;
 using Dapper;
+using Microsoft.AspNetCore.Identity;
 
 namespace WorkoutGenerator.Controllers
 {
     public class MuscleGroupController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly IConfiguration _configuration;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public MuscleGroupController(ApplicationDbContext dbContext, IConfiguration config)
+        public MuscleGroupController(IConfiguration config, UserManager<ApplicationUser> userManger)
         {
-            _context = dbContext;
             _configuration = config;
+            _userManager = userManger;
         }
 
         public IActionResult Index()
         {
-            var user = User.Identity.Name;
-            var userLoggedIn = _context.Users.Single(c => c.UserName == user);
+            var userId = _userManager.GetUserId(User);
             using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 const string sql = "SELECT * FROM MuscleGroups WHERE OwnerId = @userLoggedIn";
-                var muscleGroups = db.Query<MuscleGroup>(sql, new {userLoggedIn = userLoggedIn.Id}).ToList();
+                var muscleGroups = db.Query<MuscleGroup>(sql, new {userLoggedIn = userId}).ToList();
                 return View(muscleGroups);
             }
         }
@@ -45,13 +45,12 @@ namespace WorkoutGenerator.Controllers
         {
             if (ModelState.IsValid)
             {
-                string user = User.Identity.Name;
-                ApplicationUser userLoggedIn = _context.Users.Single(c => c.UserName == user);
+                var userId = _userManager.GetUserId(User);
 
                 using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     const string sql = "INSERT INTO MuscleGroups (Name, OwnerId) VALUES (@Name, @OwnerId);";
-                    db.Execute(sql, new { addMuscleGroupViewModel.Name, OwnerId = userLoggedIn.Id });
+                    db.Execute(sql, new { addMuscleGroupViewModel.Name, OwnerId = userId });
                     return Redirect("/MuscleGroup");
                 }
             }
@@ -61,14 +60,13 @@ namespace WorkoutGenerator.Controllers
 
         public IActionResult Remove()
         {
-            string user = User.Identity.Name;
-            ApplicationUser userLoggedIn = _context.Users.Single(c => c.UserName == user);
+            var userId = _userManager.GetUserId(User);
             ViewBag.title = "Remove Muscle Groups";
 
             using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 const string sql = "SELECT * FROM MuscleGroups WHERE OwnerId = @userLoggedIn";
-                var muscleGroups = db.Query<MuscleGroup>(sql, new { userLoggedIn = userLoggedIn.Id }).ToList();
+                var muscleGroups = db.Query<MuscleGroup>(sql, new { userLoggedIn = userId }).ToList();
                 ViewBag.musclegroups = muscleGroups;
             }
 

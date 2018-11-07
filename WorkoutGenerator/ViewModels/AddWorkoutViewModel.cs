@@ -8,5 +8,7 @@ namespace WorkoutGenerator.ViewModels
         [Display(Name = "Workout Name")]
         public string Name { get; set; }
         public string OwnerId { get; set; }
+
+        public AddWorkoutViewModel() { }
     }
 }

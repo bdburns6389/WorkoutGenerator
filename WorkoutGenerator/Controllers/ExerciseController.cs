@@ -18,20 +18,17 @@ namespace WorkoutGenerator.Controllers
 
     public class ExerciseController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly IConfiguration _configuration;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ExerciseController(ApplicationDbContext dbContext, IConfiguration config, UserManager<ApplicationUser> userManager)
+        public ExerciseController(IConfiguration config, UserManager<ApplicationUser> userManager)
         {
             _configuration = config;
-            _context = dbContext;
             _userManager = userManager;
         }
 
         public IActionResult Index()
         {
-            //TODO Change all occurences to this instead, using userManager.
             var userId = _userManager.GetUserId(User);
             using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
@@ -43,56 +40,65 @@ namespace WorkoutGenerator.Controllers
 
         public IActionResult Add()
         {
-            var user = User.Identity.Name;
-            var userLoggedIn = _context.Users.Single(c => c.UserName == user);
-            var addExerciseViewModel = new AddExerciseViewModel(_context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList());
-            return View(addExerciseViewModel);
+            var userId = _userManager.GetUserId(User);
+            using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                const string sql = "SELECT * FROM MuscleGroups WHERE OwnerId = @userId";
+                var newExerciseViewModel = db.Query<MuscleGroup>(sql, new { userId });
+                var addExerciseViewModel = new AddExerciseViewModel(newExerciseViewModel);
+                return View(addExerciseViewModel);
+
+            }
         }
 
         [HttpPost]
         public IActionResult Add(AddExerciseViewModel addExerciseViewModel)
         {
-            string user = User.Identity.Name;
-            ApplicationUser userLoggedIn = _context.Users.Single(c => c.UserName == user);
-            if (ModelState.IsValid)
+            using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                // Add the new Exercise to my existing exercises
-                var newMuscleGroup =
-                   _context.MuscleGroups.Single(c => c.MuscleGroupID == addExerciseViewModel.MuscleGroupID);
-                var dateCreated = DateTime.Now;
-
-                const string exerciseSql = "INSERT INTO Exercises (Name, Description, MuscleGroupID, OwnerID, DateCreated) " +
-                                           "VALUES (@Name, @Description, @MuscleGroupID, @OwnerID, @DateCreated);";
-                using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                var userId = _userManager.GetUserId(User);
+                if (ModelState.IsValid)
                 {
+                    const string sql = "SELECT * FROM MuscleGroups WHERE MuscleGroupID = @MuscleGroupID";
+
+                    var newMuscleGroup =
+                        db.Query<MuscleGroup>(sql, new { addExerciseViewModel.MuscleGroupID })
+                            .FirstOrDefault();
+
+                    var dateCreated = DateTime.Now;
+
+                    const string exerciseSql =
+                        "INSERT INTO Exercises (Name, Description, MuscleGroupID, OwnerID, DateCreated) " +
+                        "VALUES (@Name, @Description, @MuscleGroupID, @OwnerID, @DateCreated);";
+
                     db.Execute(exerciseSql, new
                     {
                         addExerciseViewModel.Name,
                         addExerciseViewModel.Description,
                         newMuscleGroup.MuscleGroupID,
-                        OwnerID = userLoggedIn.Id,
+                        OwnerID = userId,
                         DateCreated = dateCreated
                     });
+                    return Redirect("/Exercise");
                 }
-                return Redirect("/Exercise");
-            }
-            else
-            {
-                var populateFields = new AddExerciseViewModel(_context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList());
-                //This is needed in case the ModelState is not valid, it will keep the categories drop down populated.
+
+                const string sqlElse = "SELECT * FROM MuscleGroups WHERE OwnerId = @userId";
+                var muscleGroupElse = db.Query<MuscleGroup>(sqlElse, new {userId}).ToList();
+                //This is needed in case the ModelState is not valid, it will keep the categories drop down populated.   
+                var populateFields = new AddExerciseViewModel(muscleGroupElse);
                 return View(populateFields);
             }
+         
         }
 
         public IActionResult Remove()
         {
-            var user = User.Identity.Name;
-            var userLoggedIn = _context.Users.Single(c => c.UserName == user);
+            var userId = _userManager.GetUserId(User);
             ViewBag.title = "Remove Exercises";
             using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 const string sql = "SELECT * FROM Exercises WHERE OwnerId = @userLoggedIn";
-                var exercises = db.Query<Exercise>(sql, new {userLoggedIn = userLoggedIn.Id}).ToList();
+                var exercises = db.Query<Exercise>(sql, new { userLoggedIn = userId }).ToList();
                 ViewBag.exercises = exercises;
                 return View();
             }

@@ -14,6 +14,8 @@ namespace WorkoutGenerator.ViewModels
         [Display(Name = "Exercise")]//Add to make list Not say ExerciseID(Not a great look)
         public int ExerciseID { get; set; }
 
+        public AddWorkoutExerciseViewModel() { }
+
         public AddWorkoutExerciseViewModel(Workout workout, IEnumerable<Exercise> exercises)
         {
             Exercises = new List<SelectListItem>();
