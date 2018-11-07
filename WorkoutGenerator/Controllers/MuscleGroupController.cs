@@ -1,27 +1,37 @@
 ﻿using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using WorkoutGenerator.Data;
 using WorkoutGenerator.Models;
 using WorkoutGenerator.ViewModels;
+using Dapper;
 
 namespace WorkoutGenerator.Controllers
 {
     public class MuscleGroupController : Controller
     {
-        private readonly ApplicationDbContext context;
+        private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public MuscleGroupController(ApplicationDbContext dbContext)
+        public MuscleGroupController(ApplicationDbContext dbContext, IConfiguration config)
         {
-            context = dbContext;
+            _context = dbContext;
+            _configuration = config;
         }
 
         public IActionResult Index()
         {
-            string user = User.Identity.Name;
-            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
-            List<MuscleGroup> musclegroups = context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
-            return View(musclegroups);
+            var user = User.Identity.Name;
+            var userLoggedIn = _context.Users.Single(c => c.UserName == user);
+            using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                const string sql = "SELECT * FROM MuscleGroups WHERE OwnerId = @userLoggedIn";
+                var muscleGroups = db.Query<MuscleGroup>(sql, new {userLoggedIn = userLoggedIn.Id}).ToList();
+                return View(muscleGroups);
+            }
         }
 
         public IActionResult Add()
@@ -36,18 +46,14 @@ namespace WorkoutGenerator.Controllers
             if (ModelState.IsValid)
             {
                 string user = User.Identity.Name;
-                ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
-                // Add the new cheese to my existing cheeses
-                MuscleGroup newMuscleGroup = new MuscleGroup
+                ApplicationUser userLoggedIn = _context.Users.Single(c => c.UserName == user);
+
+                using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
-                    Name = addMuscleGroupViewModel.Name,
-                    OwnerId = userLoggedIn.Id
-                };
-
-                context.MuscleGroups.Add(newMuscleGroup);
-                context.SaveChanges();
-
-                return Redirect("/MuscleGroup");
+                    const string sql = "INSERT INTO MuscleGroups (Name, OwnerId) VALUES (@Name, @OwnerId);";
+                    db.Execute(sql, new { addMuscleGroupViewModel.Name, OwnerId = userLoggedIn.Id });
+                    return Redirect("/MuscleGroup");
+                }
             }
 
             return View(addMuscleGroupViewModel);
@@ -56,22 +62,30 @@ namespace WorkoutGenerator.Controllers
         public IActionResult Remove()
         {
             string user = User.Identity.Name;
-            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            ApplicationUser userLoggedIn = _context.Users.Single(c => c.UserName == user);
             ViewBag.title = "Remove Muscle Groups";
-            ViewBag.musclegroups = context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
+
+            using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                const string sql = "SELECT * FROM MuscleGroups WHERE OwnerId = @userLoggedIn";
+                var muscleGroups = db.Query<MuscleGroup>(sql, new { userLoggedIn = userLoggedIn.Id }).ToList();
+                ViewBag.musclegroups = muscleGroups;
+            }
+
             return View();
         }
 
         [HttpPost]
-        public IActionResult Remove(int[] musclegroupIds)
+        public IActionResult Remove(int[] muscleGroupIds)
         {
-            foreach (int musclegroupId in musclegroupIds)
+            foreach (var muscleGroupId in muscleGroupIds)
             {
-                MuscleGroup theMuscleGroup = context.MuscleGroups.Single(c => c.MuscleGroupID == musclegroupId);
-                context.MuscleGroups.Remove(theMuscleGroup);
+                using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    const string sql = "DELETE FROM MuscleGroups WHERE MuscleGroupID = @muscleGroupId";
+                    db.Execute(sql, new { muscleGroupId });
+                }
             }
-
-            context.SaveChanges();
 
             return Redirect("/");
         }

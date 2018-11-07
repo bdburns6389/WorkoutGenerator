@@ -1,40 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Protocols;
 using WorkoutGenerator.Models;
 using WorkoutGenerator.Data;
 using WorkoutGenerator.ViewModels;
+using Dapper;
+using System.Configuration;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace WorkoutGenerator.Controllers
 {
 
     public class ExerciseController : Controller
     {
-        private ApplicationDbContext context;
+        private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _configuration;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ExerciseController(ApplicationDbContext dbContext)
+        public ExerciseController(ApplicationDbContext dbContext, IConfiguration config, UserManager<ApplicationUser> userManager)
         {
-            context = dbContext;
+            _configuration = config;
+            _context = dbContext;
+            _userManager = userManager;
         }
 
-        //[Authorize] This attribute will require login before allowing access.  Will be redirected after success.
-        //[AllowAnonymous]  This attribute will allow access if global authorization is enabled.
         public IActionResult Index()
         {
-            //Filter exercises in View() to only show exercises by user.
-           string user = User.Identity.Name;
-           ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
-           var filteredExercises = context.Exercises.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
-           return View(filteredExercises);
+            //TODO Change all occurences to this instead, using userManager.
+            var userId = _userManager.GetUserId(User);
+            using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                const string sql = "SELECT * FROM dbo.[Exercises] WHERE OwnerId = @UserLoggedIn";
+                var filteredExercises = db.Query<Exercise>(sql, new { UserLoggedIn = userId }).ToList();
+                return View(filteredExercises);
+            }
         }
 
         public IActionResult Add()
         {
-            string user = User.Identity.Name;
-            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
-            AddExerciseViewModel addExerciseViewModel = new AddExerciseViewModel(context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList());
+            var user = User.Identity.Name;
+            var userLoggedIn = _context.Users.Single(c => c.UserName == user);
+            var addExerciseViewModel = new AddExerciseViewModel(_context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList());
             return View(addExerciseViewModel);
         }
 
@@ -42,33 +53,32 @@ namespace WorkoutGenerator.Controllers
         public IActionResult Add(AddExerciseViewModel addExerciseViewModel)
         {
             string user = User.Identity.Name;
-            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            ApplicationUser userLoggedIn = _context.Users.Single(c => c.UserName == user);
             if (ModelState.IsValid)
             {
-                //Create user id connection to put into new exercise, linking ApplciationUser and Exercise
-                
                 // Add the new Exercise to my existing exercises
-                MuscleGroup newMuscleGroup =
-                    context.MuscleGroups.Single(c => c.MuscleGroupID == addExerciseViewModel.MuscleGroupID);
-                DateTime datecreated = DateTime.Now;  //Created outside so if I use for loop in future, all iterations will be the same.
-                Exercise newExercise = new Exercise
+                var newMuscleGroup =
+                   _context.MuscleGroups.Single(c => c.MuscleGroupID == addExerciseViewModel.MuscleGroupID);
+                var dateCreated = DateTime.Now;
 
+                const string exerciseSql = "INSERT INTO Exercises (Name, Description, MuscleGroupID, OwnerID, DateCreated) " +
+                                           "VALUES (@Name, @Description, @MuscleGroupID, @OwnerID, @DateCreated);";
+                using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
-                    Name = addExerciseViewModel.Name,
-                    Description = addExerciseViewModel.Description,
-                    MuscleGroup = newMuscleGroup,
-                    OwnerId = userLoggedIn.Id,
-                    DateCreated = datecreated//Pay attention to this, creates time stamp for creation of entry
-                };
-
-                context.Exercises.Add(newExercise);
-                context.SaveChanges();
-
+                    db.Execute(exerciseSql, new
+                    {
+                        addExerciseViewModel.Name,
+                        addExerciseViewModel.Description,
+                        newMuscleGroup.MuscleGroupID,
+                        OwnerID = userLoggedIn.Id,
+                        DateCreated = dateCreated
+                    });
+                }
                 return Redirect("/Exercise");
             }
             else
             {
-                AddExerciseViewModel populateFields = new AddExerciseViewModel(context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList());
+                var populateFields = new AddExerciseViewModel(_context.MuscleGroups.Where(c => c.OwnerId == userLoggedIn.Id).ToList());
                 //This is needed in case the ModelState is not valid, it will keep the categories drop down populated.
                 return View(populateFields);
             }
@@ -76,24 +86,29 @@ namespace WorkoutGenerator.Controllers
 
         public IActionResult Remove()
         {
-            string user = User.Identity.Name;
-            ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
+            var user = User.Identity.Name;
+            var userLoggedIn = _context.Users.Single(c => c.UserName == user);
             ViewBag.title = "Remove Exercises";
-            ViewBag.exercises = context.Exercises.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
-            return View();
+            using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                const string sql = "SELECT * FROM Exercises WHERE OwnerId = @userLoggedIn";
+                var exercises = db.Query<Exercise>(sql, new {userLoggedIn = userLoggedIn.Id}).ToList();
+                ViewBag.exercises = exercises;
+                return View();
+            }
         }
 
         [HttpPost]
         public IActionResult Remove(int[] exerciseIds)
         {
-            foreach (int exerciseId in exerciseIds)
+            foreach (var exerciseId in exerciseIds)
             {
-                Exercise theExercise = context.Exercises.Single(c => c.ExerciseID == exerciseId);
-                context.Exercises.Remove(theExercise);
+                using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    const string sql = "DELETE FROM Exercises WHERE ExerciseID = @exerciseId";
+                    db.Execute(sql, new { exerciseId });
+                }
             }
-
-            context.SaveChanges();
-
             return Redirect("/");
         }
     }

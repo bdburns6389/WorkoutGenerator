@@ -8,12 +8,11 @@ namespace WorkoutGenerator.Data
     {
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<MuscleGroup> MuscleGroups { get; set; }
-
         public DbSet<Workout> Workouts { get; set; }
         public DbSet<Record> Records { get; set; }
         public DbSet<ExerciseWorkout> ExerciseWorkouts { get; set; }
         public DbSet<ExerciseRecord> ExerciseRecords { get; set; }
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public ApplicationDbContext(DbContextOptions options)
             : base(options)
         {
         }

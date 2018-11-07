@@ -23,7 +23,6 @@ namespace WorkoutGenerator.Controllers
             string user = User.Identity.Name;
             ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
             var filteredWorkouts = context.Workouts.Where(c => c.OwnerId == userLoggedIn.Id).ToList();
-            List<Workout> workouts = context.Workouts.ToList();
             return View(filteredWorkouts);
         }
 
@@ -49,8 +48,7 @@ namespace WorkoutGenerator.Controllers
         }
 
         public IActionResult AddRecord(int ExerciseID, int WorkoutID)
-        {//Create form for each exercise to have sets reps and weight to submit
-            //!!!!!!!!!!!!!!TAKEN FROM WORKOUT CONTROLLER!!!!!!!!!  MAY NEED CHANGING!!!!!!!!!!!!!!!!
+        {
             string user = User.Identity.Name;
             ApplicationUser userLoggedIn = context.Users.Single(c => c.UserName == user);
 
