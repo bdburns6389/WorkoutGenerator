@@ -32,7 +32,7 @@ namespace WorkoutGenerator.Controllers
             var userId = _userManager.GetUserId(User);
             using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                const string sql = "SELECT * FROM dbo.[Exercises] WHERE OwnerId = @UserLoggedIn";
+                const string sql = "SELECT * FROM Exercises WHERE OwnerId = @UserLoggedIn";
                 var filteredExercises = db.Query<Exercise>(sql, new { UserLoggedIn = userId }).ToList();
                 return View(filteredExercises);
             }

@@ -2,13 +2,13 @@
 <div class="container">
     <h2>@Model.Workout.Name</h2>
     <ul>
-        @foreach (var exercise in Model.ExerciseWorkouts)
+        @foreach (var exercise in Model.Exercises)
         {
             <li>
                 <a asp-controller="Record"
                    asp-action="ViewRecords"
                    asp-route-ExerciseID="@exercise.ExerciseID"
-                   asp-route-WorkoutID="@exercise.WorkoutID">@exercise.Exercise.Name</a>
+                   asp-route-WorkoutID="@Model.Workout.WorkoutID">@exercise.Name</a>
             </li>
         }
     </ul>

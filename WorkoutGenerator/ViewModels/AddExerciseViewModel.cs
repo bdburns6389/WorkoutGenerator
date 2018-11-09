@@ -21,7 +21,6 @@ namespace WorkoutGenerator.ViewModels
         public List<SelectListItem> MuscleGroups { get; set; }
         //should refer to key for linking to Application user.
         public string OwnerId { get; set; }
-        public DateTime DateCreated { get; set; }
 
         public AddExerciseViewModel()
         {

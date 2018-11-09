@@ -16,7 +16,7 @@ namespace WorkoutGenerator.ViewModels
         [Required(ErrorMessage = "Please enter amount of weight")]
         public string Weight { get; set; }
 
-        public IList<ExerciseWorkout> Exercises { get; set; }
+        //public IList<ExerciseWorkout> Exercises { get; set; }
 
         public Workout Workout { get; set; }
 
