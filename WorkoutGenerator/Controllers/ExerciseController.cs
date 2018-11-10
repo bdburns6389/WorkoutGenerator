@@ -68,8 +68,8 @@ namespace WorkoutGenerator.Controllers
                     var dateCreated = DateTime.Now;
 
                     const string exerciseSql =
-                        "INSERT INTO Exercises (Name, Description, MuscleGroupID, OwnerID, DateCreated) " +
-                        "VALUES (@Name, @Description, @MuscleGroupID, @OwnerID, @DateCreated);";
+                        "INSERT INTO Exercises (Name, Description, MuscleGroupID, OwnerID, DateCreated)" +
+                        " VALUES (@Name, @Description, @MuscleGroupID, @OwnerID, @DateCreated);";
 
                     db.Execute(exerciseSql, new
                     {
